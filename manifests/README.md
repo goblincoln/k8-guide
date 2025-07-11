@@ -30,6 +30,8 @@ To follow our current K8 file structure we are going to split all resources into
 - It makes it so that clients can interact with your pods without having to modify your application.
 - Clients (other pods) connect to each other utilizing an IP created for that application by the service.
 - An application with three pod replicas will be referenced under one service.
+- Kubernetes Services can be ClusterIP (default, internal only), NodePort (open a port on each Node’s IP), or LoadBalancer (request an external cloud load balancer).
+- For production HTTP/HTTPS traffic, it’s best practice to use a ClusterIP behind an Ingress.
 
 *Note:* You can expose your HTTP pods to access any web UIs that may be running in your cluster with port-forwarding or utilizing NodePorts. However, it is best practice to utilize Ingress to control web traffic.
 
@@ -40,9 +42,12 @@ To follow our current K8 file structure we are going to split all resources into
 - While ingresses have many capabilities, we primarily use it to give services externally-reachable URLs with domain names, and enforce HTTP/HTTPS protocols using TLS certificates.
 - Serve different applications at different endpoints/paths 
 - Using one ingress file, you can enable HTTP/HTTPS entry into multiple different applications.
+- You do not need an ingress for something like PostgreSQL.
 
 Route two apps based on path:
 ```
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
   name: dev-ingress
   annotations:
@@ -106,4 +111,23 @@ spec:
 
 ### Secret
 - Resource that holds a small amount of data, like passwords, tokens, and keys.
-- By default, they are unencrypted and can be modified by anyone with API (kubectl) access.
+- By default, they are unencrypted and can be modified by anyone with API (kubectl) access, because they are stored in the etcd database, which is unencrypted at rest by default. We won't do secret encryption quite yet.
+- You need to create secrets for things like your ingress SSL tokens. Other things, like usernames and passwords, work if they are hardcoded into your manifest files. However, this is not best practice and insecure in a production environment. 
+- An example of how it works is like this:
+    - you create a secret with your certificates. 
+    - Somewhere in your volumes, you can reference this secret and mount it to a filepath within this container. 
+    - Your application now holds that content and can use it when referenced.
+
+Generic Secret (Username/Password)
+``` 
+kubectl create secret generic my-db-secret \
+  --from-literal=username=myuser \
+  --from-literal=password=mypassword
+  ```
+TLS For Ingress
+```
+kubectl create secret tls my-tls-secret \
+  --cert=path/to/tls.crt \
+  --key=path/to/tls.key
+```
+
