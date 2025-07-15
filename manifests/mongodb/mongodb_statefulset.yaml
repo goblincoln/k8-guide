@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: mongodb-statefulset
+  labels:
+    app: mongodb
+spec:
+  serviceName: mongo-service
+  selector:
+    matchLabels:
+      db: mongodb
+  template:
+    metadata:
+      labels:
+        db: mongodb
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:7.0.15 # 6.0.19 is another version that can be used
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: mongodb-port # no more than 15 characters
+          containerPort: 27017
+        env:
+        - name: MONGO_INITDB_ROOT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-username
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mongodb-secret
+              key: mongo-root-password
+        volumeMounts:
+        - name: mongodb-volume
+          mountPath: /var/lib/mongo/data
+      volumes:
+      - name: mongodb-volume
+        persistentVolumeClaim:
+          claimName: mongodb-pvc

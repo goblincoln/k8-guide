@@ -48,11 +48,3 @@ spec:
   #       requests:
   #         storage: 10Gi
 
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: postgres-secret
-type: Opaque
-data:
-  postgres-password: YWRtaW4= # base64 of 'admin'

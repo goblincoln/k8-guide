@@ -117,6 +117,7 @@ spec:
     - you create a secret with your certificates. 
     - Somewhere in your volumes, you can reference this secret and mount it to a filepath within this container. 
     - Your application now holds that content and can use it when referenced.
+    - `echo -n '<password>' | base64` gives you base64 encoded string of your values.
 
 Generic Secret (Username/Password)
 ``` 
