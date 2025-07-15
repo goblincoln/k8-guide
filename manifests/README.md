@@ -110,7 +110,7 @@ spec:
 *Note:* TLS is only necessary if you plan to use HTTPS. You will have to create a K8 secret resource.
 
 ### Secret
-- Resource that holds a small amount of data, like passwords, tokens, and keys.
+- Resource that holds a small amount of encoded data, like passwords, tokens, and keys.
 - By default, they are unencrypted and can be modified by anyone with API (kubectl) access, because they are stored in the etcd database, which is unencrypted at rest by default. We won't do secret encryption quite yet.
 - You need to create secrets for things like your ingress SSL tokens. Other things, like usernames and passwords, work if they are hardcoded into your manifest files. However, this is not best practice and insecure in a production environment. 
 - An example of how it works is like this:
@@ -130,4 +130,14 @@ kubectl create secret tls my-tls-secret \
   --cert=path/to/tls.crt \
   --key=path/to/tls.key
 ```
+
+### ConfigMap
+- Stores non-sensitive configuration data as key-value pairs.
+- Environment variables, settings, config files
+- Not encoded nor encrypted.
+
+### PV and PVC
+- PV (PersistentVolume): A piece of storage in your cluster that has been provisioned, manually or automatically, from some storage backend.
+- PVC (PersistentVolumeClaim): A request for storage by a user or Pod. It claims a PV that matches its requirements (size, access mode, etc.).
+- You don’t usually create PVs manually with Longhorn. Longhorn’s dynamic provisioning means your PVC automatically gets a matching PV from Longhorn.
 

@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: StatefulSet # This is the type of resource you are creating
+metadata:
+  name: postgres-statefulset # Name of your StatefulSet
+  labels:
+    app: postgres # Label to identify this app
+spec:
+  serviceName: postgres-service # Name of the Service this StatefulSet uses
+  selector:
+    matchLabels: # How this StatefulSet finds matching Pods
+      db: postgres # Must match the Pod template labels
+  template: # Pod template that describes what to run
+    metadata:
+      labels:
+        db: postgres # Pod label that matches the selector above
+    spec: # Pod specification for containers and volumes
+      containers:
+      - name: postgres # Name of the container
+        image: postgres:16.3 # Image to pull and run
+        imagePullPolicy: IfNotPresent # Pull policy: IfNotPresent / Never / Always
+        ports:
+        - name: postgres-port # Name this port inside the container
+          containerPort: 5432 # PostgreSQL default port
+        env: # Environment variables for PostgreSQL config
+        - name: POSTGRES_DB # Default database name
+          value: postgresdb
+        - name: POSTGRES_USER # Admin username
+          value: admin
+        - name: POSTGRES_PASSWORD # For real use, store this in a Secret!
+          valueFrom: 
+            secretKeyRef: # Reference a Secret for sensitive data
+              name: postgres-secret # Name of the Secret
+              key: postgres-password # Key in the Secret containing the password
+        volumeMounts: 
+        - name: postgres-volume # Name for the volume mount
+          mountPath: /var/lib/postgresql/data # Path inside the container where data is stored
+      volumes: # Link your Pod to the PVC
+      - name: postgres-volume # Must match the volumeMounts name
+        persistentVolumeClaim:
+          claimName: postgres-pvc # The PersistentVolumeClaim to use
+  # volumeClaimTemplates:
+  # - metadata:
+  #     name: postgres-storage
+  #   spec:
+  #     accessModes: [ "ReadWriteOnce" ]
+  #     storageClassName: longhorn
+  #     resources:
+  #       requests:
+  #         storage: 10Gi
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-secret
+type: Opaque
+data:
+  postgres-password: YWRtaW4= # base64 of 'admin'
