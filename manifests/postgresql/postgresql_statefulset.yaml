@@ -25,7 +25,10 @@ spec:
         - name: POSTGRES_DB # Default database name
           value: postgresdb
         - name: POSTGRES_USER # Admin username
-          value: admin
+          valueFrom: 
+            secretKeyRef: # Reference a Secret for sensitive data
+              name: postgres-secret # Name of the Secret
+              key: postgres-user # Key in the Secret containing the username
         - name: POSTGRES_PASSWORD # For real use, store this in a Secret!
           valueFrom: 
             secretKeyRef: # Reference a Secret for sensitive data
@@ -38,13 +41,4 @@ spec:
       - name: postgres-volume # Must match the volumeMounts name
         persistentVolumeClaim:
           claimName: postgres-pvc # The PersistentVolumeClaim to use
-  # volumeClaimTemplates:
-  # - metadata:
-  #     name: postgres-storage
-  #   spec:
-  #     accessModes: [ "ReadWriteOnce" ]
-  #     storageClassName: longhorn
-  #     resources:
-  #       requests:
-  #         storage: 10Gi
 

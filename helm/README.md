@@ -17,7 +17,34 @@ You just need to look out for official vs community helm "charts."
 
 You may also remember we discussed some other applications that exist within Kubernetes, but we don't have to actively manage. We will deploy them with Helm.
 
-### (Tutorial) Longhorn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### Longhorn
+
+**LONGHORN WILL NOT WORK ON WSL!** BUT HERE'S HOW TO SET IT UP ANYWAY
 [Longhorn Docs](https://longhorn.io/docs/1.9.0/deploy/install/install-with-helm/)
 
 *Please familiarize yourself with the Helm commands*
@@ -44,7 +71,13 @@ You may also remember we discussed some other applications that exist within Kub
 
 4. `helm pull` 
 
-    This command downloads a packaged .tgz tarball if you plan to air-gap your K8s cluster. When extracted, you will receive the files:
+    This command downloads a packaged .tgz tarball if you plan to air-gap your K8s cluster:
+    ``` 
+    helm pull longhorn/longhorn --version 1.9.0
+    ```
+    *add --untar to automatically extract the files from the tar*
+    
+     When extracted, you will receive the files:
     ```
     ./longhorn/
     |- Chart.yaml
@@ -56,6 +89,11 @@ You may also remember we discussed some other applications that exist within Kub
 
     You now just have to run the install command again, but with your local directory. 
     ```
-    helm install longhorn ./longhorn --namespace longhorn-system --create-namespace -f values.yaml
+    helm install longhorn ./longhorn --namespace longhorn-system --create-namespace -f longhorn/values.yaml
     ```
+
+    Youre gonna get some errors regarding your mounts. In the values file, we need to set replicas to 1, because we are currently only using a 1-node kubernetes cluster. 
+    We also need to run `sudo mount --make-shared /` because that where longhorn will store its data
+    `sudo apt install open-iscsi`
+
 
