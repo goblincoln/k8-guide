@@ -13,6 +13,8 @@ spec:
   ports:
   - port: 8443
     name: https
+  - port: 8080
+    name: http
   - port: 6007
     name: cluster
   - port: 10000
@@ -35,6 +37,9 @@ spec:
     - port: 8443
       name: https
       targetPort: 8443
+    - port: 8080
+      name: http
+      targetPort: 8080
     - port: 10000
       name: site-to-site
       targetPort: 10000
