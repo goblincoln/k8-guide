@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
-    - host: www.goblin.com
+    - host: www.goblincoln.com
       http:
         paths:
           - path: /pgadmin(/|$)(.*)
