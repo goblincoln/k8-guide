@@ -1,0 +1,28 @@
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: nifi-pv
+  labels:
+    app: nifi
+spec:
+  storageClassName: manual
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/nifi-training"
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: nifi-pvc
+  labels:
+    app: nifi
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi

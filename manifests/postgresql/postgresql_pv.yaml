@@ -13,4 +13,4 @@ spec:
   accessModes:
   - ReadWriteOnce # Access mode allowed for this volume
   hostPath:
-    path: /mnt/postgres # Local path on the Kubernetes host node where data is stored
+    path: /mnt/postgres-training # Local path on the Kubernetes host node where data is stored

@@ -139,12 +139,11 @@ data:
   
     # web properties #
     nifi.web.war.directory=./lib
-    nifi.web.proxy.host=nifi.cb-static.svc,nifi.shocadmin.com
-    nifi.web.https.port=8443
+    nifi.web.proxy.host=nifi.cb-static.svc,shoc.goblincoln.com
+    nifi.web.https.port=
+    nifi.web.http.port=8080
     nifi.web.http.host=
-    nifi.web.http.network.interface.default=
     nifi.web.https.host=
-    nifi.web.https.network.interface.default=
     nifi.web.jetty.working.directory=./work/jetty
     nifi.web.jetty.threads=200
     # nifi.web.proxy.context.path=
@@ -157,12 +156,12 @@ data:
     nifi.sensitive.props.additional.keys=
   
     
-    nifi.security.keystore=./conf/keystore.p12
-    nifi.security.keystoreType=PKCS12
+    nifi.security.keystore=
+    nifi.security.keystoreType=
     nifi.security.keystorePasswd=
     nifi.security.keyPasswd=
-    nifi.security.truststore=./conf/truststore.p12
-    nifi.security.truststoreType=PKCS12
+    nifi.security.truststore=
+    nifi.security.truststoreType=
     nifi.security.truststorePasswd=
     nifi.security.user.login.identity.provider=single-user-provider
     nifi.security.user.authorizer=single-user-authorizer
