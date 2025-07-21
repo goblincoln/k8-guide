@@ -8,13 +8,14 @@ The focus is on hands-on, clear examples that work in both local and small clust
 
 The project is organized into modules:
 
-.
+```
 ├── Module 1/           # Core Kubernetes concepts and basic workloads
 ├── Module 2/           # Stateful workloads: databases, NiFi, etc.
 ├── Module 3/           # Storage topics, Longhorn, and additional services
 ├── manifests/          # Shared YAML examples (if any)
 ├── charts/             # Helm charts (if packaged)
 ├── README.md
+```
 
 Each module contains:
 - Step-by-step tasks and explanations
