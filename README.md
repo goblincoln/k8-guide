@@ -8,13 +8,16 @@ The focus is on hands-on, clear examples that work in both local and small clust
 
 The project is organized into modules:
 
-.
-├── Module 1/           # Core Kubernetes concepts and basic workloads
-├── Module 2/           # Stateful workloads: databases, NiFi, etc.
-├── Module 3/           # Storage topics, Longhorn, and additional services
-├── manifests/          # Shared YAML examples (if any)
-├── charts/             # Helm charts (if packaged)
-├── README.md
+Module 1:
+- [Cluster Basics](./Module-1/about_kubernetes.md)
+- [Single-node Cluster Setup](./Module-1/setup.md)
+
+Module 2:
+- [Overview of Manifests/Resource Types](./Module-2/manifests/manifests.md)
+- [Ingress](./Module-2/manifests/ingress.md)
+
+Module 3:
+- WIP
 
 Each module contains:
 - Step-by-step tasks and explanations

@@ -1,3 +1,6 @@
+[Return Home](/README.md)
+
+
 # Kubernetes Development Environment Setup (Windows)
 
 This guide will help you set up a Kubernetes development environment on your Windows machine using WSL and RKE2.
@@ -161,7 +164,3 @@ or close and reopen your terminal.
 - Both `kubectl` and `k9s` are effective; use what works best for you. We might not always have k9s, but we will always have kubectl.
 
 ---
-
-
-
-Set-VMProcessor -VMName Kubernetes -ExposeVirtualizationExtensions $true

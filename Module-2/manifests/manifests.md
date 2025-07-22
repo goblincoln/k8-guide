@@ -1,6 +1,10 @@
-# Kubernetes Manifests Guide
+[Return Home](/README.md)
+
+# Kubernetes Manifests/Resource Types Guide
 
 This section will help you understand the basics of Kubernetes manifests and how they relate to deploying applications. If you’re new to Kubernetes, don’t worry. This document breaks down the most important concepts and resources you’ll encounter.
+
+A **Kubernetes Resource** is any object you define and manage in the cluster, like Pods, Services, or Ingresses, that tells Kubernetes what to run and how to run it.
 
 ## What is a Manifest?
 
@@ -20,7 +24,7 @@ Other kubectl commands:
 
 ## Naming Conventions
 
-To keep things organized, name your manifest files using the pattern:  
+For training purposes and to keep things organized, name your manifest files using the pattern:  
 `<appname>_<resourcetype>.yaml`  
 Example: `postgresql_deployment.yaml`, `nifi_service.yaml`
 
@@ -60,71 +64,6 @@ Example: `postgresql_deployment.yaml`, `nifi_service.yaml`
   - Centralized routing for multiple apps.
 - **Example:** Serve multiple apps at different paths or subdomains.
 
-#### Example: Path-based Routing
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: dev-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
-spec:
-  rules:
-    - host: www.example.com
-      http:
-        paths:
-          - path: /pgadmin(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: pgadmin-service
-                port:
-                  number: 80
-          - path: /nifi(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: nifi-service
-                port:
-                  number: 8080
-```
-
-#### Example: Subdomain-based Routing
-```yaml
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: dev-ingress
-spec:
-  ingressClassName: nginx
-  tls:
-    - hosts:
-        - app1.example.com
-        - app2.example.com
-      secretName: tls-secret
-  rules:
-    - host: app1.example.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app1-service
-                port:
-                  number: 3030
-    - host: app2.example.com
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: app2-service
-                port:
-                  number: 4040
-```
-*Note:* TLS is only needed for HTTPS. You’ll need a Kubernetes Secret for your certificate.
 
 ---
 
