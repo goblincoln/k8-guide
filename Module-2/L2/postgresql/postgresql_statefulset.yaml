@@ -21,7 +21,7 @@ spec:
         ports:
         - name: postgres-port # Name this port inside the container
           containerPort: 5432 # PostgreSQL default port
-        env: # Environment variables for PostgreSQL config
+        env: # Environment variables for PostgreSQL config. These will be different depending on the app
         - name: POSTGRES_DB # Default database name
           value: postgresdb
         - name: POSTGRES_USER # Admin username

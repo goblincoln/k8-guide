@@ -9,12 +9,15 @@ The focus is on hands-on, clear examples that work in both local and small clust
 The project is organized into modules:
 
 Module 1:
-- [Cluster Basics](./Module-1/about_kubernetes.md)
-- [Single-node Cluster Setup](./Module-1/setup.md)
+- [About Kubernetes](./Module-1/about_kubernetes.md)
+- [Instructions for Single-node Cluster](./Module-1/setup.md)
 
 Module 2:
-- [Overview of Manifests/Resource Types](./Module-2/manifests/manifests.md)
-- [Ingress](./Module-2/manifests/ingress.md)
+- [Lesson 1: Intro to Resource Manifests](./Module-2/L1/manifests.md)
+- [Lesson 2: Postgres - Your First App](./Module-2/L2/walkthrough.md)
+- [Lesson 3: Pgadmin Exercise](./Module-2/L3/exercise.md)
+- [Lesson 4: Ingress](./Module-2/L4/ingress.md)
+- [Lesson 5: Deploy More Apps](./Module-2/L5/exercise.md)
 
 Module 3:
 - WIP
