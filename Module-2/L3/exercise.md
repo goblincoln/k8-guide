@@ -18,6 +18,7 @@ Below is a skeleton for a PgAdmin manifest stack. Complete the following exercis
 ## 2. Service
 
 - **a.** Create a unique name for the service and add it to the `metadata` section of the manifest.
+- **b.** 
 ---
 
 ## 3. Deployment

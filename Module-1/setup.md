@@ -98,9 +98,9 @@ We’ll make `kubectl`, `crictl`, and `ctr` available system-wide or for your us
     ```sh
     mkdir -p ~/.kube
     ```
-3. Move the config file:
+3. Copy the config file:
     ```sh
-    sudo mv /etc/rancher/rke2/rke2.yaml ~/.kube/
+    sudo cp /etc/rancher/rke2/rke2.yaml ~/.kube/
     ```
 4. Change ownership:
     ```sh
