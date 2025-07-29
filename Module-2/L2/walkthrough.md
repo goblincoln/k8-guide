@@ -14,7 +14,7 @@ PostgreSQL has five resources that we will apply to our cluster.
 
 ## Exercise
 
-Look through the files. The StatefulSet is the bread and butter of deploying an application in Kubernetes, so start with that.
+Look through the [PostgreSQL manifest](./postgresql/) files. The StatefulSet is the bread and butter of deploying an application in Kubernetes, so start with that.
 
 ### Things to Emphasize
 
@@ -40,13 +40,13 @@ That’s where PostgreSQL keeps its database files. This file path will be diffe
 
 You do not want to apply the StatefulSet first. It depends on other resources to properly deploy its pods.
 
-1. Apply the **Secret** first and check if it exists:
+1. Apply the [Secret](./postgresql/postgresql_secret.yaml) first and check if it exists:
    ```bash
    kubectl apply -f postgres_secret.yaml
    kubectl get secret
    ```
 
-2. Apply the pv/pvc (both are in one file):
+2. Apply the [pv/pvc](./postgresql/postgresql_pvc.yaml) (both are in one file):
     ```bash
     kubectl apply -f postgres_pvc.yaml
     kubectl get pv
@@ -70,13 +70,13 @@ You do not want to apply the StatefulSet first. It depends on other resources to
     sudo chown -R postgrs:postgres /mnt/postgres-training
     ```
 
-3. Apply the **Service**:
+3. Apply the [Service](./postgresql/postgresql_service.yaml):
     ```bash
     kubectl apply -f postgres_service.yaml
     kubectl get svc
     ```
 
-4. Apply the **StatefulSet**
+4. Apply the [StatefulSet](./postgresql/postgresql_statefulset.yaml)
     ```
     kubectl apply -f postgres_statefulset.yaml
     kubectl get pods
@@ -92,9 +92,7 @@ kubectl logs <pod-name>
 ```
 
 ### Executing
-If a Pod is running, you are allowed to use a shell provided by the image that the application is built on to **exec** into the Pod.  
-For an application like PostgreSQL, you can do things like create a database directly inside your Pod.  
-You can also browse the files and view the layout. Most Pods have a Unix-based file system.
+If a Pod is running, you are allowed to use a shell provided by the image that the application is built on to **exec** into the Pod. For an application like PostgreSQL, you can do things like create a database directly inside your Pod. You can also browse the files and view the layout. Most Pods have a Unix-based file system.
 
 Example:
 ```bash
@@ -104,7 +102,13 @@ kubectl exec -it <pod-name> -- /bin/bash
 
 */bin/bash is the location of the command to run the shell of your choice, typically located in the bin folder.*
 
-We will not be making any databases directly in the pod, but feel free to exec into a pod and `cd` around.
+## Exercise
+We will not be making any databases directly in the pod, but here's a second exercise that will demonstrate how mounts work.
+
+1. Remember where you made a mount `/mnt/postgres-training`? List the files in that directory and make note of what you see.
+2. Exec into your postgres pod. Once you're in, list the files in the `/var/lib/postgresql/data` directory. Remember we have that in the statefulset? That is the path within the PostgreSQL container that database information is stored. It should look the same as what you have in `mnt/postgres-training`.
+
+
 
 ## Congrats! You deployed PostgreSQL on your K8s stack.
 Next up, [deploy PgAdmin](../L3/exercise.md)
