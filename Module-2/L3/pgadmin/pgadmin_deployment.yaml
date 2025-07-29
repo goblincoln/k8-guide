@@ -14,22 +14,22 @@ spec:
         frontend: pgadmin
     spec:
       securityContext:
-        fsGroup: #
+        fsGroup: #2a
       containers:
       - name: pgadmin
-        image: #
+        image: #2b
         imagePullPolicy: IfNotPresent
         ports:
-        - name: #
+        - name: #2c
           containerPort: 80
         env: 
         - name: PGADMIN_DEFAULT_EMAIL
-          value: #
+          value: #2d
         - name: PGADMIN_DEFAULT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: #
-              key: #
+              name: #2e
+              key: #2e
 
 # The following is found here: https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
 # Warning: pgAdmin runs as the pgadmin user (UID: 5050) in the pgadmin group (GID: 5050) in the container. You must ensure that all files are readable, and where necessary (e.g. the working/session directory) writeable for this user on the host machine. For example:
