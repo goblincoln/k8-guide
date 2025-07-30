@@ -42,13 +42,13 @@ You do not want to apply the StatefulSet first. It depends on other resources to
 
 1. Apply the [Secret](./postgresql/postgresql_secret.yaml) first and check if it exists:
    ```bash
-   kubectl apply -f postgres_secret.yaml
+   kubectl apply -f postgresql_secret.yaml
    kubectl get secret
    ```
 
 2. Apply the [pv/pvc](./postgresql/postgresql_pvc.yaml) (both are in one file):
     ```bash
-    kubectl apply -f postgres_pvc.yaml
+    kubectl apply -f postgresql_pvc.yaml
     kubectl get pv
     kubectl get pvc
     ```
@@ -72,13 +72,13 @@ You do not want to apply the StatefulSet first. It depends on other resources to
 
 3. Apply the [Service](./postgresql/postgresql_service.yaml):
     ```bash
-    kubectl apply -f postgres_service.yaml
+    kubectl apply -f postgresql_service.yaml
     kubectl get svc
     ```
 
 4. Apply the [StatefulSet](./postgresql/postgresql_statefulset.yaml)
     ```
-    kubectl apply -f postgres_statefulset.yaml
+    kubectl apply -f postgresql_statefulset.yaml
     kubectl get pods
     ```
 

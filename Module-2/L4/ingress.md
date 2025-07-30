@@ -135,3 +135,38 @@ spec:
                   number: 4040
 ```
 *Note:* TLS is only needed for HTTPS. You’ll need a Kubernetes Secret for your certificate.
+
+## Next Steps
+
+After deploying your Ingress and confirming its configuration, you can access your application using the `www.hostname.com/path` you specified in the Ingress manifest.
+
+However, because your chosen hostname is not registered in a public DNS, your system won't know how to resolve it unless you add an entry to your local hosts file.
+
+### Update Your Hosts File
+
+#### On Linux
+
+1. Open the `/etc/hosts` file with a text editor (you may need `sudo`):
+  ```bash
+  sudo nano /etc/hosts
+  ```
+2. Add a line like the following, replacing `www.host.com` with your Ingress hostname:
+  ```
+  127.0.0.1   www.host.com
+  ```
+3. Save and close the file.
+
+#### On Windows
+
+1. Open Notepad as Administrator.
+2. Open the file: `C:\Windows\System32\drivers\etc\hosts`
+3. Add the following line at the end, replacing `www.host.com` as needed:
+  ```
+  127.0.0.1   www.host.com
+  ```
+4. Save the file.
+
+---
+
+Now, you should be able to access your application at `http://www.host.com/path` if your Ingress is set up correctly.
+`

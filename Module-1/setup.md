@@ -100,11 +100,11 @@ We’ll make `kubectl`, `crictl`, and `ctr` available system-wide or for your us
     ```
 3. Copy the config file:
     ```sh
-    sudo cp /etc/rancher/rke2/rke2.yaml ~/.kube/
+    sudo cp /etc/rancher/rke2/rke2.yaml ~/.kube/config
     ```
 4. Change ownership:
     ```sh
-    sudo chown youruser:youruser ~/.kube/rke2.yaml
+    sudo chown youruser:youruser ~/.kube/config
     ```
 
 ---
@@ -114,7 +114,7 @@ We’ll make `kubectl`, `crictl`, and `ctr` available system-wide or for your us
 Add the following lines to your `~/.bashrc`:
 
 ```sh
-alias kubectl="kubectl --kubeconfig /home/YOURUSERNAME/.kube/rke2.yaml"
+alias kubectl="kubectl --kubeconfig /home/YOURUSERNAME/.kube/config"
 alias ctr="ctr --address /run/k3s/containerd/containerd.sock"
 alias k=kubectl
 export KUBE_EDITOR=my_fav_editor
