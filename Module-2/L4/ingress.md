@@ -2,75 +2,65 @@
 
 # Understanding Ingress
 
-After deploying PgAdmin4 and Postgres, you can access the PgAdmin UI by port forwarding or setting a NodePort. However, our preferred method for accessing web applications is through Ingress.
+After deploying PgAdmin4 and Postgres, you can access PgAdmin using port forwarding or a NodePort. However, the preferred way to expose web apps in Kubernetes is with an **Ingress**.
 
-## What is an Ingress?
+## What is Ingress?
 
-As described in the manifest documentation:
-- **Purpose:** Route external HTTP/HTTPS traffic to services in your cluster.
-- **Features:** 
-  - Custom domains and paths.
-  - TLS termination (HTTPS).
-  - Centralized routing for multiple apps.
-- **Example:** Serve multiple apps at different paths or subdomains.
+An **Ingress** is a Kubernetes resource that manages external access to services in your cluster, typically HTTP/HTTPS. It lets you:
 
-### Why Use Ingress?
+- Route traffic based on hostnames or URL paths
+- Use custom domains
+- Terminate TLS (HTTPS)
+- Centralize routing for multiple apps
 
-Instead of exposing your applications using IP addresses and ports, which can be insecure and difficult to manage, Ingress allows you to define rules for routing traffic based on hostnames or paths. This approach improves security by minimizing open ports and makes it easier to manage access to your applications.
+**Why use Ingress?**  
+Instead of exposing apps on random ports and IPs, Ingress lets you define clear rules for routing traffic, improving security and manageability.
 
-### What is a Hostname?
+## Hostnames and Ingress
 
-A hostname is a human-readable name assigned to a device (host) on a network, often managed through the Domain Name System (DNS). While hostnames are typically managed externally, for testing purposes, we can define our own hostnames locally.
+A **hostname** is a human-friendly name (like `www.example.com`) that maps to an IP address. For testing, you can define hostnames locally on your machine.
 
-Ingress enables you to access your web applications using these hostnames, rather than exposing raw IP addresses and ports.
+Ingress lets you access your apps using these hostnames, rather than raw IPs and ports.
 
-## Let's Begin
-### Step 1: Create your Ingress
+---
 
-Below is a skeleton manifest for creating an Ingress resource. The comments below explain each section of the manifest:
+## Step 1: Create an Ingress
 
-- **apiVersion:** Specifies the API version for the Ingress resource (`networking.k8s.io/v1` is the stable version).
-- **kind:** Declares the resource type as `Ingress`.
-- **metadata.name:** The unique name for this Ingress resource (e.g., `pgadmin-ingress`).
-- **metadata.annotations:** Extra instructions for the Ingress controller (e.g., NGINX). The example annotation rewrites the incoming URL path.
-- **spec.rules:** Defines one or more rules for routing incoming requests.
-    - **host:** The domain name this Ingress will respond to (e.g., `www.k8s.com`).
-    - **http.paths:** Specifies the URL paths to route to your service.
-        - **path:** The URL path to match (e.g., `/k8`).
-        - **pathType:** How the path is matched (`Prefix` for any path that starts with this value, `Exact` for an exact match).
-        - **backend.service.name:** The name of the Kubernetes Service to route traffic to.
-        - **backend.service.port.number:** The port on the Service to send traffic to (e.g., 80 for HTTP).
+Here’s a basic Ingress manifest with comments:
 
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-name: # e.g., 'pgadmin-ingress'
-annotations:
-  nginx.ingress.kubernetes.io/rewrite-target: /$2
+  name: pgadmin-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   rules:
     - host: www.k8s.com
       http:
         paths:
-          - path: /k8
-            pathType: # Prefix or Exact
+          - path: /k8(/|$)(.*)
+            pathType: Prefix
             backend:
               service:
-                name: # your-service-name
+                name: pgadmin-service
                 port:
-                  number: # service-port-number
+                  number: 80
 ```
 
+**Key fields:**
+- `host`: Domain name to match (e.g., `www.k8s.com`)
+- `path`: URL path to match (e.g., `/k8`)
+- `backend.service.name`: Name of the service to route to
+- `backend.service.port.number`: Service port
 
+---
 
+## More Examples
 
+**Path-based Routing:**
 
-
-
-
-
-#### Detailed Example: Path-based Routing
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -99,7 +89,8 @@ spec:
                   number: 8080
 ```
 
-#### Example: Subdomain-based Routing
+**Subdomain-based Routing with TLS:**
+
 ```yaml
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -134,39 +125,31 @@ spec:
                 port:
                   number: 4040
 ```
-*Note:* TLS is only needed for HTTPS. You’ll need a Kubernetes Secret for your certificate.
-
-## Next Steps
-
-After deploying your Ingress and confirming its configuration, you can access your application using the `www.hostname.com/path` you specified in the Ingress manifest.
-
-However, because your chosen hostname is not registered in a public DNS, your system won't know how to resolve it unless you add an entry to your local hosts file.
-
-### Update Your Hosts File
-
-#### On Linux
-
-1. Open the `/etc/hosts` file with a text editor (you may need `sudo`):
-  ```bash
-  sudo nano /etc/hosts
-  ```
-2. Add a line like the following, replacing `www.host.com` with your Ingress hostname:
-  ```
-  127.0.0.1   www.host.com
-  ```
-3. Save and close the file.
-
-#### On Windows
-
-1. Open Notepad as Administrator.
-2. Open the file: `C:\Windows\System32\drivers\etc\hosts`
-3. Add the following line at the end, replacing `www.host.com` as needed:
-  ```
-  127.0.0.1   www.host.com
-  ```
-4. Save the file.
+*Note: For HTTPS, you need a Kubernetes Secret with your TLS certificate.*
 
 ---
 
-Now, you should be able to access your application at `http://www.host.com/path` if your Ingress is set up correctly.
-`
+## Step 2: Update Your Hosts File
+
+Since your hostnames aren’t public, add them to your local hosts file:
+
+**Linux:**
+  ```bash
+  sudo nano /etc/hosts
+  ```
+  Add:
+  ```
+  127.0.0.1   www.k8s.com
+  ```
+
+**Windows:**
+- Open Notepad as Administrator
+- Edit: `C:\Windows\System32\drivers\etc\hosts`
+- Add:
+  ```
+  127.0.0.1   www.k8s.com
+  ```
+
+---
+
+Now, you can access your app at `http://www.k8s.com/path` (or whatever hostname/path you set). The hosts file tells your computer to resolve the hostname to the correct IP, allowing your browser to reach your Ingress.
