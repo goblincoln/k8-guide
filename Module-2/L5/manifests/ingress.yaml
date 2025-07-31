@@ -1,51 +1,50 @@
-# We need an ingress resource to expose all our frontend/web services.
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: dev-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
+  tls:
+  - hosts:
+      - nifi.k8s.com
+    secretName: dev-ingress-tls
   rules:
-    - host: www.goblincoln.com
+    - host: mongo.k8s.com
       http:
         paths:
-          - path: /pgadmin(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: pgadmin-service
-                port:
-                  number: 80
-
-          - path: /jupyterlab(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: jupyterlab-service
-                port:
-                  number: 80
-
-          - path: /mongodb-express(/|$)(.*)
+          - path: /
             pathType: Prefix
             backend:
               service:
                 name: mongodb-express-service
                 port:
                   number: 8081
-
-          - path: /nifi(/|$)(.*)
+    - host: pgadmin.k8s.com
+      http:
+        paths:
+          - path: /
             pathType: Prefix
             backend:
               service:
-                name: nifi-service
+                name: pgadmin-service
                 port:
-                  number: 8080
-          - path: /nifi-p01(/|$)(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: nifi-service
-                port:
-                  number: 7001
+                  number: 80
+    - host: nifi.k8s.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: nifi-service
+              port:
+                number: 8443
+    - host: jupyterlab.k8s.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: jupyterlab-service
+              port:
+                number: 8888

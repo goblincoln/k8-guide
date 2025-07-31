@@ -4,7 +4,7 @@ metadata:
   name: mongodb-express-service
 spec:
   selector:
-    app: mongodb-express-service
+    app: mongodb-express
   ports:
     - protocol: TCP
       port: 8081

@@ -15,3 +15,8 @@ A pretty straightforward, yet versatile application. Jupyterlab Notebook is a si
 ## NiFi
 
 NiFi exists to automate the flow of data between systems. For example, if one system, computer, or source produces data, and another system consumes it, NiFi provides a means of automating the transfer of data between the two. For more information, refer to the [NiFi Documentation](https://nifi.apache.org/docs/nifi-docs/html/overview.html).
+
+
+## Your task
+
+Deploy these applications. The manifest files are provided, but some may require extra configuration on your part to work properly.
