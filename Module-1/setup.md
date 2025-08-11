@@ -9,45 +9,33 @@ Please familiarize yourself with this process and these commands. If something d
 
 Before you start, if you happen to run a command and you see "command not found," all it typically requires is a sudo apt install [package] and it usually provides that  in the output, unless you misspelled.
 
----
+This guide will assume you already have a functional Linux environment available as setting it up can be found within the documentation that pertains to your specific environment.
 
-## 1. Install WSL (Windows Subsystem for Linux)
-
-WSL is a virtual operating system integrated into Windows, providing a Linux environment without a GUI.
-
-**Steps:**
-
-1. Open a PowerShell terminal and run:
-    ```sh
-    wsl --install -d [distro]
-    ```
-    - `-d` selects a specific distro.
-    - To see available distros:
-      ```sh
-      wsl --list --online
-      ```
-
-2. Search for "Ubuntu" or "WSL" in Windows search and launch it.
-
-3. Set up your WSL user when prompted.
-
-4. Update your packages:
-    ```sh
-    sudo apt update && sudo apt upgrade
-    ```
+Options that are available: 
+- WSL
+- Virtualization (HyperV, VMWare, etc.)
+- Bare Linux
 
 ---
 
-## 2. Install RKE2 (Rancher Kubernetes Engine - Government)
+## 1. Install Kubernetes
 
-RKE2 is a hardened version of Kubernetes, often used in government environments.
+### Option 1A: RKE2 (Rancher Kubernetes Engine - Government)
+
+RKE2 is a hardened version of Kubernetes, often used in government environments. My tutorial will focus on using this until I provide documentation for the others.
 
 - Follow the [RKE2 Quickstart Installation Guide](https://docs.rke2.io/install/quickstart).
 - Read and execute the commands under **"Server Node Installation"**.
 
+### Option 1B: Alternatives 
+
+Alternative installation options (may have compatibility issues with this tutorial):
+- [Install with snap on Ubuntu](https://ubuntu.com/kubernetes/install)
+- [Minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download)
+
 ---
 
-## 3. Access Kubernetes Executables
+## 2. Access Kubernetes Executables
 
 We’ll make `kubectl`, `crictl`, and `ctr` available system-wide or for your user.
 
@@ -88,7 +76,7 @@ We’ll make `kubectl`, `crictl`, and `ctr` available system-wide or for your us
 
 ---
 
-## 4. Configure kubectl
+## 3. Configure kubectl
 
 1. Locate your `rke2.yaml` config file:
     ```
@@ -109,7 +97,7 @@ We’ll make `kubectl`, `crictl`, and `ctr` available system-wide or for your us
 
 ---
 
-## 5. Update Your `.bashrc` for Convenience
+## 4. Update Your `.bashrc` for Convenience
 
 Add the following lines to your `~/.bashrc`:
 
@@ -137,16 +125,15 @@ or close and reopen your terminal.
 
 ---
 
-## 6. Recommended Tools
+## 5. Recommended Tools
 
 - **tmux**: Terminal multiplexer for multiple sessions in one window.
     ```sh
     sudo apt install tmux
     ```
 - **k9s**: Terminal-based UI for Kubernetes.
-    - [k9s Installation](https://k9scli.io/topics/install/)
-    - Download and install per instructions on their page.
-    - They're using some funky package managers, feel free to try one out or just download and build from the source.
+    - [k9s Installation](https://k9scli.io/topics/install/), [GitHub](https://github.com/derailed/k9s)
+    - Download and install per instructions on their page or go to the GitHub link for targeted installation instructions.
 - **helm**: Kubernetes package manager.
     -  [Helm Docs](https://helm.sh/)
     - Copy the commands line-by-line.
