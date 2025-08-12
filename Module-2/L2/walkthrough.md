@@ -54,7 +54,7 @@ You do not want to apply the StatefulSet first. It depends on other resources to
     ```
     You need to ensure it says "Bound" and not "Pending." If it says "Pending" you need to navigate your PV and look where it says `hostpath`. 
     
-    Because we are manually provisioning our storage, and not using an application like Longhorn currently, we need to manually create the directory assigned to `hostpath`. If you plan on putting it in a protected directory like /mnt, you will have to use the `sudo` command.
+    Because we are manually provisioning our storage, and not using an application like Longhorn currently, we most likely need to manually create the directory assigned to `hostpath` depending on the permissions of your file system. If you plan on putting it in a protected directory like /mnt, you will have to use the `sudo` command.
 
     ```bash
     sudo mkdir /mnt/postgres-training
@@ -81,6 +81,9 @@ You do not want to apply the StatefulSet first. It depends on other resources to
     kubectl apply -f postgresql_statefulset.yaml
     kubectl get pods
     ```
+![](../../img/k8s/pg-pending.png)
+![](../../img/k8s/pg-running.png)
+
 
 ## After it's Running
 
@@ -90,6 +93,7 @@ You can now perform various monitoring actions on your resource or pod.
 kubectl describe <resource-type> <resource-name>
 kubectl logs <pod-name>
 ```
+
 
 ### Executing
 If a Pod is running, you are allowed to use a shell provided by the image that the application is built on to **exec** into the Pod. For an application like PostgreSQL, you can do things like create a database directly inside your Pod. You can also browse the files and view the layout. Most Pods have a Unix-based file system.
@@ -101,6 +105,8 @@ kubectl exec -it <pod-name> -- /bin/bash
 *-it means "integrated terminal"*
 
 */bin/bash is the location of the command to run the shell of your choice, typically located in the bin folder.*
+
+![](../../img/k8s/exec.png)
 
 ## Exercise
 We will not be making any databases directly in the pod, but here's a second exercise that will demonstrate how mounts work.
