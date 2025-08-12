@@ -36,7 +36,7 @@ When the `values.yaml` file is created, it contains many default values. For thi
 
 We'll convert hard-coded values to variables in `values.yaml`. Open both `values.yaml` and your manifest files side by side for reference.
 
-For example, to set the image tag for PostgreSQL, add to `values.yaml`:
+For example, to set the image tag for PostgreSQL, add to `database-stack/postgresql/values.yaml`:
 
 ```yaml
 statefulset:
@@ -48,3 +48,11 @@ Then, in your `postgresql_statefulset.yaml`, reference the value using Helm synt
 ```yaml
 image: {{ .Values.statefulset.image }}
 ```
+
+Essentially, you will follow the same process for everything. Helm has standardized and default templates, but realistically it works regardless of the template as long as you are referencing your value properly.
+
+Take advantage on how dynamic Helm truly is. You can turn anything into a value. 
+
+---
+
+### Next - [Helper Function](./helpers.md)

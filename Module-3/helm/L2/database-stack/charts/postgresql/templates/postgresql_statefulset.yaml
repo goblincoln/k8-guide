@@ -1,38 +1,38 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: postgres-statefulset
+  name: {{ include "postgres.fullname" . }}-statefulset
   labels:
-    app: postgres
+    {{- include "postgres.labels" . | nindent 4 }}
 spec:
-  serviceName: postgres-service
+  serviceName: {{ include "postgres.fullname" . }}-service
   selector:
     matchLabels:
-      db: postgres
+      {{- include "postgres.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        db: postgres
+        {{- include "postgres.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - name: postgres
-        image: {{ .Values.statefulset.image }} # container image set from values.yaml
-        imagePullPolicy: {{ .Values.statefulset.imagePullPolicy }} # image pull policy set from values.yaml
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.statefulset.image }}
+        imagePullPolicy: {{ .Values.statefulset.imagePullPolicy }}
         ports:
-        - name: postgres-port
+        - name: postgres
           containerPort: 5432
         env:
         - name: POSTGRES_DB
-          value: postgresdb
+          value: {{ .Values.postgres.db }}
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              name: postgres-secret
+              name: {{ include "postgres.fullname" . }}-secret
               key: postgres-user
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: postgres-secret
+              name: {{ include "postgres.fullname" . }}-secret
               key: postgres-password
         volumeMounts:
         - name: postgres-volume
@@ -40,4 +40,4 @@ spec:
       volumes:
       - name: postgres-volume
         persistentVolumeClaim:
-          claimName: postgres-pvc
+          claimName: {{ include "postgres.fullname" . }}-pvc
