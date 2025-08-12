@@ -18,6 +18,9 @@ Options that are available:
 
 ---
 
+**Before you start:**
+If you are unfamiliar with linux or CLI commands, please do your due diligence and learn those. Please don't put random files where they shouldn't be, either. Usually I put mine in my user folder `/home/goblincoln/`. **Please be careful when deleting or modifying files.**
+
 ## 1. Install Kubernetes
 
 ### Option 1A: RKE2 (Rancher Kubernetes Engine - Government)
