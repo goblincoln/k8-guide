@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: PersistentVolumeClaim # This is the resource type you are creating
+metadata:
+  name: postgres-pvc # Name of your PVC
+  labels:
+    app: postgres # Label to help identify related resources
+spec:
+  storageClassName: manual # Using a manual StorageClass (for static PV binding)
+  accessModes:
+  - ReadWriteOnce # Allows one node to read/write at a time
+  resources:
+    requests:
+      storage: 5Gi # Requested size; must be <= available PV size
+---
+# Note: If you use Longhorn or dynamic storage, you usually don't write this manually!
+
+apiVersion: v1
+kind: PersistentVolume # This is the resource type you are creating
+metadata:
+  name: postgres-pv # Name of your PV
+  labels:
+    app: postgres # Label to help identify related resources
+spec:
+  storageClassName: manual # Must match the PVC's storageClassName
+  capacity:
+    storage: 10Gi # Total size available for claims
+  accessModes:
+  - ReadWriteOnce # Access mode allowed for this volume
+  hostPath:
+    path: /mnt/postgres-training # Local path on the Kubernetes host node where data is stored

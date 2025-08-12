@@ -1,26 +1,50 @@
-# Exercise: Create Your Own Chart
+# Exercise: Create Your Own Helm Chart
 
-If you have your own in-house application or an app that does not have a helm chart, you can create it yourself.
+If you have an in-house application or an app without a Helm chart, you can create one yourself. The files provided in this lesson are examples—try building your own for hands-on practice.
 
-1. Create a chart:
-    ```
-    helm create database-stack
-    ```
+## 1. Create a Chart
 
-    This will generate a file structure like this:
+```sh
+helm create database-stack
+```
 
-- `Chart.yaml`: The metadata/entry point for your Helm chart.
-- `values.yaml`: The centralized configuration of environmental variables and values.
-- `templates/`: YAML files with values replaced by variables set within your values.yaml file. Ex: `image: {{.Values.image.repository}}` sets the image.
-- `charts/`: A directory that contains subcharts, if you created them.
+This command generates the following structure:
 
-2. Since PGAdmin and Postgres go hand-in-hand, let's make a Helm chart with those as its subcharts. First remove all template files so we can use our own files.
-    ```
-    rm -rf ./templates/* 
-    cd charts/
-    helm create pgadmin
-    rm -rf ./templates/*
-    ```
-    You should have a structure somewhat like this, now:
-    
-    ![Heirarchy](../../../img/helm/ls.png)
+- `Chart.yaml`: Chart metadata and entry point.
+- `values.yaml`: Centralized configuration for variables and values.
+- `templates/`: YAML templates with variables (e.g., `image: {{ .Values.image.repository }}`).
+- `charts/`: Directory for subcharts.
+
+## 2. Add Subcharts for PGAdmin and PostgreSQL
+
+Since PGAdmin and PostgreSQL are often used together, let's add them as subcharts:
+
+```sh
+rm -rf ./templates/*
+cd charts/
+helm create pgadmin
+helm create postgresql
+rm -rf pgadmin/templates/*
+rm -rf postgresql/templates/*
+```
+
+Copy the PgAdmin and PostgreSQL YAML files from L2 and L3 into their respective `chart/templates/` folders.
+
+When the `values.yaml` file is created, it contains many default values. For this exercise, delete all content in `values.yaml` to start fresh.
+
+## 3. Parameterize Values
+
+We'll convert hard-coded values to variables in `values.yaml`. Open both `values.yaml` and your manifest files side by side for reference.
+
+For example, to set the image tag for PostgreSQL, add to `values.yaml`:
+
+```yaml
+statefulset:
+    image: postgres:16.3
+```
+
+Then, in your `postgresql_statefulset.yaml`, reference the value using Helm syntax:
+
+```yaml
+image: {{ .Values.statefulset.image }}
+```

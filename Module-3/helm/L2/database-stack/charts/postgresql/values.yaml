@@ -1,0 +1,6 @@
+statefulset:
+  image: postgres:16.3
+  imagePullPolicy: IfNotPresent
+
+
+

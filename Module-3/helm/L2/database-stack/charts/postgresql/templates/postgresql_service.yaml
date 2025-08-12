@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service # This is the resource type you are creating
+metadata:
+  name: postgres-service # Name of your Service
+  labels:
+    app: postgres # Label to help identify related resources
+spec:
+  type: ClusterIP # Type of Service; ClusterIP is default for internal access
+  clusterIP: None # Headless service for StatefulSet/Database
+  selector:
+    db: postgres # Must match the Pod template label in the StatefulSet
+  ports:
+  - port: 5432 # Port exposed by the Service (PostgreSQL default)
+    targetPort: postgres-port # Name of the container port inside your Pod
