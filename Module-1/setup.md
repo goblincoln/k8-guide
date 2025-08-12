@@ -76,6 +76,7 @@ We’ll make `kubectl`, `crictl`, and `ctr` available system-wide or for your us
     ```sh
     kubectl version
     ```
+    ![Kubectl](../img/k8s/kubectl.png)
 
 ---
 
@@ -126,14 +127,11 @@ exec bash
 ```
 or close and reopen your terminal.
 
+![](../img/k8s/bashrc.png)
+
 ---
 
-## 5. Recommended Tools
-
-- **tmux**: Terminal multiplexer for multiple sessions in one window.
-    ```sh
-    sudo apt install tmux
-    ```
+## 5. Other installs
 - **k9s**: Terminal-based UI for Kubernetes.
     - [k9s Installation](https://k9scli.io/topics/install/), [GitHub](https://github.com/derailed/k9s)
     - Download and install per instructions on their page or go to the GitHub link for targeted installation instructions.
@@ -147,6 +145,10 @@ or close and reopen your terminal.
     sudo apt-get install helm 
     ```
 ---
+
+You should end up with these results if everything is working:
+![K8s Working CLI](../img/k8s/cli-node.png)
+![K8s Working K9s](../img/k8s/k9s-node.png)
 
 ## Notes
 

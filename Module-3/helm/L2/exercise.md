@@ -22,7 +22,5 @@ If you have your own in-house application or an app that does not have a helm ch
     rm -rf ./templates/*
     ```
     You should have a structure somewhat like this, now:
-    ```
-    database-stack
-    |-
-    ```
+    
+    ![Heirarchy](../../../img/helm/ls.png)
