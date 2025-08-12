@@ -153,3 +153,6 @@ Since your hostnames aren’t public, add them to your local hosts file:
 ---
 
 Now, you can access your app at `http://www.k8s.com/path` (or whatever hostname/path you set). The hosts file tells your computer to resolve the hostname to the correct IP, allowing your browser to reach your Ingress.
+
+---
+### Next - [Learn About Secrets](secret.md)

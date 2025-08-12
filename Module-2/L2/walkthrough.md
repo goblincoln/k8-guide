@@ -111,4 +111,5 @@ We will not be making any databases directly in the pod, but here's a second exe
 
 
 ## Congrats! You deployed PostgreSQL on your K8s stack.
-Next up, [deploy PgAdmin](../L3/exercise.md)
+
+### Next - [Deploy PgAdmin Yourself](../L3/exercise.md)

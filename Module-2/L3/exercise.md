@@ -30,3 +30,7 @@ Below is a skeleton for a [PgAdmin manifest stack.](./pgadmin/) Complete the fol
 - **a.** Create a unique name for the service and add it to the `metadata` section of the manifest.
 - **b.** Create a name, a port number for the service. Recall what targetPort is by looking at the postgresql service. You can either use the port number itself or the name of the port that was created in 2c.
 - **c.** Apply the service to your cluster.
+
+
+---
+### Next - [Learn about Ingresses](../L4/ingress.md)

@@ -36,3 +36,5 @@ For more information, read here:
 - [GeeksForGeeks K8 Introduction](https://www.geeksforgeeks.org/devops/introduction-to-kubernetes-k8s/)
 - [GeeksForGeeks K8 Architecture](https://www.geeksforgeeks.org/devops/kubernetes-architecture/)
 
+---
+### Next - [Setup RKE2 Single Node Cluster](./setup.md)

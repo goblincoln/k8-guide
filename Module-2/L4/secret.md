@@ -75,3 +75,6 @@ openssl x509 -req \
 ```
 - Signs the CSR using your CA, producing a TLS certificate (`domain.crt`) valid for 365 days.
 - The `subjectAltName` extension allows the certificate to be valid for both `domain` and `domain.com`.
+
+---
+### Next - [Module 3: Helm](../../Module-3/helm/L1/intro.md)

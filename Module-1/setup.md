@@ -151,3 +151,5 @@ or close and reopen your terminal.
 - Both `kubectl` and `k9s` are effective; use what works best for you. We might not always have k9s, but we will always have kubectl.
 
 ---
+
+### Next - [Module 2 L1: K8 Manifests](../Module-2/L1/manifests.md)
