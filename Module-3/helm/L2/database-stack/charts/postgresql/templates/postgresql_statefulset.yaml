@@ -1,43 +1,48 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
+  # Name of the StatefulSet, using Helm template helper
   name: {{ include "postgres.fullname" . }}-statefulset
   labels:
+    # Standard labels from Helm helper
     {{- include "postgres.labels" . | nindent 4 }}
 spec:
+  # Name of the headless service for the StatefulSet
   serviceName: {{ include "postgres.fullname" . }}-service
   selector:
     matchLabels:
+      # Selector labels for pod matching
       {{- include "postgres.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
+        # Pod labels for selection and management
         {{- include "postgres.selectorLabels" . | nindent 8 }}
     spec:
       containers:
-      - name: {{ .Chart.Name }}
-        image: {{ .Values.statefulset.image }}
-        imagePullPolicy: {{ .Values.statefulset.imagePullPolicy }}
+      - name: {{ .Chart.Name }} # Container name from chart name
+        image: {{ .Values.postgres.image }} # Image from values.yaml
+        imagePullPolicy: {{ .Values.postgres.imagePullPolicy }} # Pull policy from values.yaml
         ports:
         - name: postgres
-          containerPort: 5432
+          containerPort: {{ .Values.postgres.containerPort }} # Expose Postgres port from values.yaml
         env:
         - name: POSTGRES_DB
-          value: {{ .Values.postgres.db }}
+          value: {{ .Values.postgres.db }} # Database name from values.yaml
         - name: POSTGRES_USER
           valueFrom:
             secretKeyRef:
-              name: {{ include "postgres.fullname" . }}-secret
-              key: postgres-user
+              name: {{ include "postgres.fullname" . }}-secret # Secret name from Helm helper
+              key: postgres-user # Secret key for user
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: {{ include "postgres.fullname" . }}-secret
-              key: postgres-password
+              name: {{ include "postgres.fullname" . }}-secret # Secret name from Helm helper
+              key: postgres-password # Secret key for password
         volumeMounts:
         - name: postgres-volume
-          mountPath: /var/lib/postgresql/data
+          mountPath: /var/lib/postgresql/data # Mount path for Postgres data
       volumes:
       - name: postgres-volume
         persistentVolumeClaim:
-          claimName: {{ include "postgres.fullname" . }}-pvc
+          claimName: {{ include "postgres.fullname" . }}-pvc # PVC name from Helm helper

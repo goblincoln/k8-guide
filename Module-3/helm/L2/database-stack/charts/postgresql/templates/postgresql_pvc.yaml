@@ -5,12 +5,12 @@ metadata:
   labels:
     {{- include "postgres.labels" . | nindent 4 }}
 spec:
-  storageClassName: manual
+  storageClassName: {{ .Values.postgres.storageClass }}
   accessModes:
-  - ReadWriteOnce
+  - {{ .Values.postgres.storageAccessMode }}
   resources:
     requests:
-      storage: 5Gi
+      storage: {{ .Values.postgres.storageRequestSize }}
 ---
 apiVersion: v1
 kind: PersistentVolume
@@ -21,8 +21,8 @@ metadata:
 spec:
   storageClassName: manual
   capacity:
-    storage: 10Gi
+    storage: {{ .Values.postgres.storageCapacity }}
   accessModes:
-  - ReadWriteOnce
+  - {{ .Values.postgres.storageAccessMode }}
   hostPath:
     path: /mnt/postgres-training

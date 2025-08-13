@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: #3a
+  name: {{ include "pgadmin.fullname" . }}-service
   labels:
-    app: pgadmin
+    {{- include "pgadmin.labels" . | nindent 4 }}
 spec:
   selector:
-    frontend: pgadmin
+    {{- include "pgadmin.selectorLabels" . | nindent 6 }}
   ports:
-  - name: #3b
-    port: #3b
-    targetPort: #3b
+  - name: pgadmin
+    port: {{ .Values.pgadmin.servicePort }}
+    targetPort: {{ .Values.pgadmin.containerPort }}

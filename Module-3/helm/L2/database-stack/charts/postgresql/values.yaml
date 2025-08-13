@@ -1,7 +1,28 @@
-statefulset:
+postgres:
+  
+  # image configuration
   image: postgres:16.3
   imagePullPolicy: IfNotPresent
 
-postgres:
+  # networking
+  containerPort: 5432
+  servicePort: 5432
+  
+  # database configuration
   db: postgresdb
+  defaultUser: admin
+  defaultPassword: admin
+
+  # storage configuration
+  
+  longhorn:
+    enabled: false
+
+  storageClass: manual
+  storageRequestSize: 5Gi
+  storageCapacity: 5Gi
+  storagePath: /mnt/postgres-training
+  storageAccessMode: ReadWriteOnce
+
+
 

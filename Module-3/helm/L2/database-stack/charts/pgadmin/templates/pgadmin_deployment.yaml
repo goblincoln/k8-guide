@@ -1,36 +1,32 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pgadmin
+  name: {{ include "pgadmin.fullname" . }}
   labels:
-    app: pgadmin
+    {{ include "pgadmin.labels" . | nindent 4 }}
 spec:
   selector:
     matchLabels:
-      frontend: pgadmin
+      {{- include "pgadmin.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       labels:
-        frontend: pgadmin
+        {{- include "pgadmin.selectorLabels" . | nindent 8 }}
     spec:
       securityContext:
-        fsGroup: #2a
+        fsGroup: 5050
       containers:
-      - name: pgadmin
-        image: #2b
-        imagePullPolicy: IfNotPresent
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.pgadmin.image }}
+        imagePullPolicy: {{ .Values.pgadmin.imagePullPolicy }}
         ports:
-        - name: #2c
+        - name: pgadmin
           containerPort: 80
         env: 
         - name: PGADMIN_DEFAULT_EMAIL
-          value: #2d
+          value: {{ .Values.pgadmin.defaultEmail }}
         - name: PGADMIN_DEFAULT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: #2e
-              key: #2e
-
-# The following is found here: https://www.pgadmin.org/docs/pgadmin4/latest/container_deployment.html
-# Warning: pgAdmin runs as the pgadmin user (UID: 5050) in the pgadmin group (GID: 5050) in the container. You must ensure that all files are readable, and where necessary (e.g. the working/session directory) writeable for this user on the host machine. For example:
-# sudo chown -R 5050:5050 <host_directory>
+              name: {{ include "pgadmin.fullname" . }}-secret
+              key: default-password

@@ -7,8 +7,10 @@ metadata:
 spec:
   type: ClusterIP
   clusterIP: None
+  publishNotReadyAddresses: true
   selector:
-    db: postgres
+    {{- include "postgres.selectorLabels" . | nindent 4 }}
   ports:
-  - port: 5432
+  - port: {{ .Values.postgres.servicePort }}
+    name: postgres-port
     targetPort: postgres-port
