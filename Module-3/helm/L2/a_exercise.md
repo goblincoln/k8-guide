@@ -1,4 +1,4 @@
-# Exercise: Create Your Own Helm Chart
+# 3.2 Exercise: Create Your Own Helm Chart
 
 This exercise will guide you step-by-step through creating a Helm chart for an application stack (for example, PostgreSQL and PGAdmin). If you’re new to Helm, don’t worry—each step is explained in detail, with practical examples and tips.
 
@@ -185,3 +185,4 @@ You can look at the [templated files](./database-stack/charts/postgresql/templat
 
 **Tip:** Helm charts can be as simple or as complex as you need. Start small, test often, and gradually add more features as you get comfortable!
 
+### Next - [3.2b Deploy a Helm Stack](./deploy.md)

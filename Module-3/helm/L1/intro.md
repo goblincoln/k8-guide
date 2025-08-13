@@ -1,4 +1,4 @@
-# Helm: Kubernetes Package Manager
+# 3.1 Helm: Kubernetes Package Manager
 
 [Official Helm Documentation](https://helm.sh/)
 
@@ -70,3 +70,5 @@ Helm is the package manager for Kubernetes. It helps you define, install, and up
 - [Helm Quickstart Guide](https://helm.sh/docs/intro/quickstart/)
 - [Longhorn Installation Guide](https://longhorn.io/docs/1.9.0/deploy/install/install-with-helm/)
 
+
+### Next - [3.2a Templating Helm Files](../L2/a_exercise.md)

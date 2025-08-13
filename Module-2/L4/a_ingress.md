@@ -1,6 +1,6 @@
 [Return Home](/README.md)
 
-# Understanding Ingress
+# 2.4a Understanding Ingress
 
 After deploying PgAdmin4 and Postgres, you can access PgAdmin using port forwarding or a NodePort. However, the preferred way to expose web apps in Kubernetes is with an **Ingress**.
 
@@ -155,4 +155,4 @@ Since your hostnames aren’t public, add them to your local hosts file:
 Now, you can access your app at `http://www.k8s.com/path` (or whatever hostname/path you set). The hosts file tells your computer to resolve the hostname to the correct IP, allowing your browser to reach your Ingress.
 
 ---
-### Next - [Learn About Secrets](secret.md)
+### Next - [2.4b Learn About Secrets](secret.md)

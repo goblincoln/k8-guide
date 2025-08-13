@@ -1,4 +1,4 @@
-# Exercise: Deploy more apps
+# 2.5 Exercise: Deploy more apps
 
 Now just try deploying the rest of these apps. Some might be more complicated than others!
 
@@ -20,3 +20,7 @@ NiFi exists to automate the flow of data between systems. For example, if one sy
 ## Your task
 
 Deploy these applications. The manifest files are provided, but some may require extra configuration on your part to work properly.
+
+---
+
+### Next - [3.1 Helm](../../Module-3/helm/L1/intro.md)

@@ -1,6 +1,6 @@
 [Return Home](/README.md)
 
-# Walkthrough
+# 2.2: PostgreSQL Walkthrough
 
 This will be a step-by-step guide to deploying PostgreSQL on Kubernetes. 
 
@@ -118,4 +118,4 @@ We will not be making any databases directly in the pod, but here's a second exe
 
 ## Congrats! You deployed PostgreSQL on your K8s stack.
 
-### Next - [Deploy PgAdmin Yourself](../L3/exercise.md)
+### Next - [2.3 Deploy PgAdmin Yourself](../L3/exercise.md)

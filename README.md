@@ -20,7 +20,9 @@ Module 2:
 - [Lesson 5: Deploy More Apps](./Module-2/L5/exercise.md)
 
 Module 3:
-- WIP
+- [Lesson 1: Intro to Helm](./Module-3/helm/L1/intro.md)
+- [Lesson 2a: Templating & Deploying Chart](./Module-3/helm/L2/a_exercise.md)
+- [Lesson 2b: Deploying Chart w/ Subcharts](./Module-3/helm/L2/b_deploy.md)
 
 Each module contains:
 - Step-by-step tasks and explanations

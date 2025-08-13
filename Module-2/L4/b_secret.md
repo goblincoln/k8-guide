@@ -1,4 +1,4 @@
-# Creating TLS Secrets
+# 2.4b Creating TLS Secrets
 
 This tutorial will briefly step away from Kubernetes resources to focus on TLS certificates. If you plan to deploy a web application, enforcing HTTPS is essential. But how do you achieve that? Let's explore the basics of TLS certificates and how to generate them.
 
@@ -77,4 +77,4 @@ openssl x509 -req \
 - The `subjectAltName` extension allows the certificate to be valid for both `domain` and `domain.com`.
 
 ---
-### Next - [Module 3: Helm](../../Module-3/helm/L1/intro.md)
+### Next - [1.5 Deploy More Apps](../L5/exercise.md)

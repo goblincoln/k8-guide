@@ -1,6 +1,6 @@
 [Return Home](/README.md)
 
-# Exercise: Your Turn
+# 2.3 Exercise: Your Turn
 
 Below is a skeleton for a [PgAdmin manifest stack.](./pgadmin/) Complete the following exercises to fill it out:
 
@@ -33,4 +33,4 @@ Below is a skeleton for a [PgAdmin manifest stack.](./pgadmin/) Complete the fol
 
 
 ---
-### Next - [Learn about Ingresses](../L4/ingress.md)
+### Next - [2.4a Learn about Ingresses](../L4/ingress.md)

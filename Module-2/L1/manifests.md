@@ -1,6 +1,6 @@
 [Return Home](/README.md)
 
-# Kubernetes Manifests/Resource Types Guide
+# 2.1: Kubernetes Manifests/Resource Types Guide
 
 This section will help you understand the basics of Kubernetes manifests and how they relate to deploying applications. If you’re new to Kubernetes, don’t worry. This document breaks down the most important concepts and resources you’ll encounter.
 
@@ -129,4 +129,4 @@ This guide should help you get started with the most common Kubernetes resources
 
 ---
 
-### Next - [PostgreSQL Walkthrough](../L2/walkthrough.md)
+### Next - [2.2 PostgreSQL Walkthrough](../L2/walkthrough.md)
