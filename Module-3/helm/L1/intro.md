@@ -52,6 +52,13 @@ You can deploy the Kubernetes Dashboard using Helm with just a few commands:
     ```
     - Replace `<kong-pod-name>` with the actual name of the Kong pod, which you can find with:
 4. **Authentication:**
+
+  - Create an account with full permissions to your resources:
+    ```sh
+    kubectl create clusterrolebinding kubernetes-dashboard-admin \
+      --clusterrole=cluster-admin \
+      --serviceaccount=kubernetes-dashboard:kubernetes-dashboard-api
+    ```
   - Generate a bearer token to log in:
     ```sh
     kubectl -n kubernetes-dashboard create token kubernetes-dashboard-api
