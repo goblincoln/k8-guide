@@ -29,6 +29,15 @@ Helm is the package manager for Kubernetes. It helps you define, install, and up
 | `helm uninstall <release>` | Remove a release from Kubernetes |
 | `helm pull <chart> [--untar]` | Download a chart archive (optionally extract) |
 
+## Example 1 (Easy): Installing K8 Dashboard with Helm
+
+Deploying the K8s dashboard using helm consists of only 3 basic commands:
+```bash
+helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+helm repo update
+helm install kdash kubernetes-dashboard/kubernetes-dashboard
+```
+
 ## Example: Installing Longhorn with Helm
 
 > **Note:** Longhorn does not work on WSL.
