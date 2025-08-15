@@ -1,0 +1,16 @@
+title: Kubernetes Training Guide
+description: Hands-on Kubernetes training with practical examples
+theme: minima
+
+markdown: kramdown
+
+
+header_pages:
+  - index.md
+  - Module-1/index.md
+  - Module-2/index.md
+  - Module-3/index.md
+
+author:
+  name: Ella Lincoln
+  url: https://www.linkedin.com/in/ella-lincoln-488a86238/

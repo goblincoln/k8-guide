@@ -33,4 +33,4 @@ Below is a skeleton for a [PgAdmin manifest stack.](./pgadmin/) Complete the fol
 
 
 ---
-### Next - [2.4a Learn about Ingresses](../L4/ingress.md)
+### Next - [2.4a Learn about Ingresses](../L4/a_ingress.md)
