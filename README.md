@@ -59,13 +59,3 @@ This keeps the focus on building practical command-line skills while also introd
 
 This guide is maintained by [Ella Lincoln](https://www.linkedin.com/in/ella-lincoln-488a86238/).  
 Feel free to reach out for feedback, ideas, or suggestions.
-
----
-
-## Next Steps
-
-- Ensure each module has a clear README explaining its purpose.
-- Keep manifests clean and versioned.
-- Document any known issues or common pitfalls.
-- Use consistent file and folder naming.
-
