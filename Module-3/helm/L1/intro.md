@@ -34,15 +34,15 @@ Helm is the package manager for Kubernetes. It helps you define, install, and up
 You can deploy the Kubernetes Dashboard using Helm with just a few commands:
 
 1. **Add the Kubernetes Dashboard Helm repository and update your local cache:**
-  ```sh
-  helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-  helm repo update
-  ```
+    ```sh
+    helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+    helm repo update
+    ```
 
 2. **Install the Dashboard chart:**
-  ```sh
-  helm install kdash kubernetes-dashboard/kubernetes-dashboard
-  ```
+    ```sh
+    helm install kdash kubernetes-dashboard/kubernetes-dashboard
+    ```
   - This will create a release named `kdash` in your current namespace (typically `default`). To install in a specific namespace, add `--namespace <namespace> --create-namespace`.
 
 3. **Accessing the Dashboard:**

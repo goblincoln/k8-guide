@@ -1,6 +1,6 @@
 # 3.2 Exercise: Create Your Own Helm Chart
 
-This exercise will guide you step-by-step through creating a Helm chart for an application stack (for example, PostgreSQL and PGAdmin). If you’re new to Helm, don’t worry—each step is explained in detail, with practical examples and tips.
+This exercise will guide you step-by-step through creating a Helm chart for an application stack (for example, PostgreSQL and PGAdmin). 
 
 ---
 

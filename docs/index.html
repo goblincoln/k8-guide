@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>K8 Guide</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="./script.js"></script>
+</head>
+<body>
+
+        <div class="body-header">K8 Guide</div>
+        <div class="main-layout">
+            <div class="sidebar">
+                    <button class="btn"><a href="./index.html">Home</a></button>
+
+                    <button class="dropdown-btn">1. Introduction</button>
+                    <div class="dropdown-content">
+                    <a href="./M1/1.html">1.1 About K8s</a>
+                    <a href="./M1/2.html">1.2 Set Up Environment</a>
+                    </div>
+
+                    <button class="dropdown-btn">2. Deploying Apps</button>
+                    <div class="dropdown-content">
+                    <a href="./M2/1.html">2.1 Manifests</a>
+                    <a href="./M2/2.html">2.2 PostgreSQL Walkthrough</a>
+                    <a href="./M2/3.html">2.3 Exercise: Deploy PgAdmin</a>
+                    <a href="./M2/4a.html">2.4a Ingress</a>
+                    <a href="./M2/4b.html">2.4b Secrets</a>
+                    <a href="./M2/5.html">2.5 Exercise: Deploy More Apps</a>
+                    </div>
+
+                    <button class="dropdown-btn">3. Helm</button>
+                    <div class="dropdown-content">
+                    <a href="./M3/1.html">3.1 About Helm</a>
+                    <a href="./M3/2a.html">3.2a Create a Helm Chart</a>
+                    <a href="./M3/2b.html">3.2b Deploy a Stack With Helm</a>
+                    </div>
+            </div>
+            <div class="main-content">
+                <div class="content-header">Home</div>
+                <div class="content">
+                    <h1>Kubernetes Training Guide</h1>
+                    <hr>
+                    <p>This repository is a practical Kubernetes training resource.<br>
+                    It walks through deploying, managing, and troubleshooting real-world containerized applications using Kubernetes.<br>
+                    The focus is on hands-on, clear examples that work in both local and small cluster environments.</p>
+
+                    <h2>Repository Structure</h2>
+                    <hr>
+                    <p>The project is organized into modules:</p>
+                    <ul>
+                        <li><b>Module 1:</b>
+                            <ul>
+                                <li><a href="../Module-1/about_kubernetes.md">About Kubernetes</a></li>
+                                <li><a href="../Module-1/setup.md">Instructions for Single-node Cluster</a></li>
+                            </ul>
+                        </li>
+                        <li><b>Module 2:</b>
+                            <ul>
+                                <li><a href="../Module-2/L1/manifests.md">Lesson 1: Intro to Resource Manifests</a></li>
+                                <li><a href="../Module-2/L2/walkthrough.md">Lesson 2: Postgres - Your First App</a></li>
+                                <li><a href="../Module-2/L3/exercise.md">Lesson 3: Pgadmin Exercise</a></li>
+                                <li><a href="../Module-2/L4/ingress.md">Lesson 4: Ingress</a></li>
+                                <li><a href="../Module-2/L5/exercise.md">Lesson 5: Deploy More Apps</a></li>
+                            </ul>
+                        </li>
+                        <li><b>Module 3:</b>
+                            <ul>
+                                <li><a href="../Module-3/helm/L1/intro.md">Lesson 1: Intro to Helm</a></li>
+                                <li><a href="../Module-3/helm/L2/a_exercise.md">Lesson 2a: Templating & Deploying Chart</a></li>
+                                <li><a href="../Module-3/helm/L2/b_deploy.md">Lesson 2b: Deploying Chart w/ Subcharts</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <p>Each module contains:</p>
+                    <ul>
+                        <li>Step-by-step tasks and explanations</li>
+                        <li>Example manifests and Helm values</li>
+                        <li>Notes on key configurations and best practices</li>
+                        <li>Common troubleshooting guidance</li>
+                    </ul>
+
+                    <h2>Topics Covered</h2>
+                    <hr>
+                    <ul>
+                        <li>Kubernetes core resource types</li>
+                        <li>Stateless Deployments vs StatefulSets</li>
+                        <li>Persistent Volumes, StorageClasses, and dynamic storage</li>
+                        <li>Ingress controllers and routing</li>
+                        <li>Helm basics and package management</li>
+                        <li>Example applications: NiFi, JupyterLab, PostgreSQL, and others</li>
+                    </ul>
+
+                    <h2>App-specific Notes</h2>
+                    <hr>
+                    <p>Applications with more complex configuration have their own subfolders in the appropriate module.<br>
+                    Each application folder may include:</p>
+                    <ul>
+                        <li>A brief README with details and context</li>
+                        <li>Example manifest files</li>
+                        <li>Example Helm values files (where applicable)</li>
+                    </ul>
+                    <p>Keeping these small, focused READMEs helps explain configuration choices without cluttering the main guide.</p>
+
+                    <h2>Using CLI and k9s</h2>
+                    <hr>
+                    <p>The main instructions use the standard <code>kubectl</code> CLI.<br>
+                    Where useful, optional tips for using <code>k9s</code> are included to help visualize resources more easily.<br>
+                    This keeps the focus on building practical command-line skills while also introducing helpful tools.</p>
+
+                    <h2>Contributing and Contact</h2>
+                    <hr>
+                    <p>This guide is maintained by <a href="https://www.linkedin.com/in/ella-lincoln-488a86238/" target="_blank">Ella Lincoln</a>.<br>
+                    Feel free to reach out for feedback, ideas, or suggestions.</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>

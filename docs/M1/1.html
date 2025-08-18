@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.1: About Kubernetes</title>
+    <link rel="stylesheet" href="../style.css">
+    <script src="../script.js"></script>
+</head>
+<body>
+
+        <div class="body-header">K8 Guide</div>
+        <div class="main-layout">
+            <div class="sidebar">
+                    <button class="btn"><a href="../index.html">Home</a></button>
+
+                    <button class="dropdown-btn">1. Introduction</button>
+                    <div class="dropdown-content">
+                    <a href="./1.html">1.1 About K8s</a>
+                    <a href="./2.html">1.2 Set Up Environment</a>
+                    </div>
+
+                    <button class="dropdown-btn">2. Deploying Apps</button>
+                    <div class="dropdown-content">
+                    <a href="../M2/1.html">2.1 Manifests</a>
+                    <a href="../M2/2.html">2.2 PostgreSQL Walkthrough</a>
+                    <a href="../M2/3.html">2.3 Exercise: Deploy PgAdmin</a>
+                    <a href="../M2/4a.html">2.4a Ingress</a>
+                    <a href="../M2/4b.html">2.4b Secrets</a>
+                    <a href="../M2/5.html">2.5 Exercise: Deploy More Apps</a>
+                    </div>
+
+                    <button class="dropdown-btn">3. Helm</button>
+                    <div class="dropdown-content">
+                    <a href="../M3/1.html">3.1 About Helm</a>
+                    <a href="../M3/2a.html">3.2a Create a Helm Chart</a>
+                    <a href="../M3/2b.html">3.2b Deploy a Stack With Helm</a>
+                    </div>
+            </div>
+            <div class="main-content">
+                <div class="content-header">1.1 About Kubernetes</div>
+                <div class="content">
+                    <a href="../index.html">&larr; Return Home</a>
+                    <h1>Module 1: About Kubernetes</h1>
+                    <p>Kubernetes (K8s) is an open-source system for automating the deployment, scaling, and management of containerized applications. It enables you to run containers reliably across a cluster of machines.</p>
+
+                    <h2>Key Terms</h2>
+                    <h3>Cluster</h3>
+                    <p>A <b>cluster</b> is the complete Kubernetes environment, consisting of:</p>
+                    <ul>
+                        <li><b>Control Plane</b>: Manages and makes decisions about the cluster.</li>
+                        <li><b>Worker Nodes</b></li>
+                    </ul>
+
+                    <h3>Node</h3>
+                    <p>A <b>node</b> is a machine (virtual or physical) in the cluster. There are two types:</p>
+                    <ul>
+                        <li><b>Control Plane Node</b>: Runs components that manage the cluster.</li>
+                        <li><b>Worker Node</b>: Runs the actual application workloads.</li>
+                    </ul>
+
+                    <h3>Pod</h3>
+                    <p>A <b>pod</b> is the smallest deployable unit in Kubernetes. It can contain one or more containers that:</p>
+                    <ul>
+                        <li>Share the same network IP and storage.</li>
+                        <li>Always run together on the same node.</li>
+                    </ul>
+
+                    <h3>Kubelet</h3>
+                    <p>The <b>kubelet</b> is an agent that runs on each node. It:</p>
+                    <ul>
+                        <li>Communicates with the control plane.</li>
+                        <li>Ensures the containers described in PodSpecs are running correctly.</li>
+                    </ul>
+
+                    <h3>Kube-proxy</h3>
+                    <p><b>kube-proxy</b> runs on each node. It:</p>
+                    <ul>
+                        <li>Handles network routing inside the cluster.</li>
+                        <li>Ensures traffic reaches the correct Pods.</li>
+                    </ul>
+
+                    <p>For more information, read here:</p>
+                    <ul>
+                        <li><a href="https://www.geeksforgeeks.org/devops/introduction-to-kubernetes-k8s/" target="_blank">GeeksForGeeks K8 Introduction</a></li>
+                        <li><a href="https://www.geeksforgeeks.org/devops/kubernetes-architecture/" target="_blank">GeeksForGeeks K8 Architecture</a></li>
+                    </ul>
+                    <hr>
+                    <p><b>Next - <a href="./2.html">Setup RKE2 Single Node Cluster</a></b></p>
+                </div>
+            </div>
+        </div>
+
+</body>
+</html>
