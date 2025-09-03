@@ -44,7 +44,7 @@ openssl genrsa -out ca.key 2048
 
 ```sh
 openssl req -new -x509 -days 365 -key ca.key \
-    -subj "/C=CN/ST=GD/L=SZ/O=USAF/CN=Test Root CA" \
+    -subj "/C=US/ST=GD/L=SZ/O=USAF/CN=Test Root CA" \
     -out ca.crt
 ```
 - This command generates a self-signed root CA certificate (`ca.crt`) valid for 365 days.
