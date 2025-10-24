@@ -22,12 +22,12 @@
 
                     <button class="dropdown-btn">2. Deploying Apps</button>
                     <div class="dropdown-content">
-                    <a href="./1.html">2.1 Manifests</a>
-                    <a href="./2.html">2.2 PostgreSQL Walkthrough</a>
-                    <a href="./3.html">2.3 Exercise: Deploy PgAdmin</a>
-                    <a href="./4a.html">2.4a Ingress</a>
-                    <a href="./4b.html">2.4b Secrets</a>
-                    <a href="./5.html">2.5 Exercise: Deploy More Apps</a>
+                    <a href="./manifests-intro.html">2.1 Manifests</a>
+                    <a href="./postgresql-walkthrough.html">2.2 PostgreSQL Walkthrough</a>
+                    <a href="./pgadmin-exercise.html">2.3 Exercise: Deploy PgAdmin</a>
+                    <a href="./ingress.html">2.4a Ingress</a>
+                    <a href="./secrets.html">2.4b Secrets</a>
+                    <a href="./deploy-more-apps.html">2.5 Exercise: Deploy More Apps</a>
                     </div>
 
                     <button class="dropdown-btn">3. Helm</button>
@@ -40,7 +40,7 @@
             <div class="main-content">
                 <div class="content-header">2.2 PostgreSQL Walkthrough</div>
                 <div class="content">
-                    <a href="/README.md">Return Home</a>
+                    <a href="../index.html">Return Home</a>
 
                     <h1>2.2: PostgreSQL Walkthrough</h1>
 
@@ -62,7 +62,7 @@
                     <h3>Things to Emphasize</h3>
                     <ul>
                         <li>The <strong>StatefulSet</strong> is how we run our database Pod(s) with stable storage and identity. Unlike a Deployment, a StatefulSet keeps track of each Pod’s name and volume.</li>
-                        <li>The <strong>Service</strong> for this StatefulSet is a <strong>headless Service</strong> (<code>clusterIP: None</code>). This means it doesn’t give you a single IP address. Instead, it creates DNS records for each Pod. Databases like PostgreSQL need stable network identities, so this is important.</li>
+                        <li>The <strong>Service</strong> for this StatefulSet is a <strong>headless Service</strong> (<code>clusterIP: None</code>). This means it doesn’t give you a single IP address. Instead, it creates DNS records for each Pod equal to the service name. Databases like PostgreSQL need stable network identities, so this is important.</li>
                         <li>The <strong>Secret</strong> is where we keep our sensitive info. In this case, the username and password. Always base64 your secrets. For real clusters, you’d store this more securely.</li>
                         <li>The <strong>PVC</strong> (PersistentVolumeClaim) asks for storage. The <strong>PV</strong> (PersistentVolume) provides the actual storage from your node. The PVC and PV must match on <code>storageClassName</code> (manual) and access mode.</li>
                         <li>Notice how the Pod inside the StatefulSet uses <code>volumeMounts</code> to mount the storage at <code>/var/lib/postgresql/data</code>. That’s where PostgreSQL keeps its database files. This file path will be different depending on your app.</li>
@@ -105,8 +105,8 @@
                             Apply the <a href="https://github.com/goblincoln/k8-guide/tree/main/Module-2/L2/postgresql/postgresql_statefulset.yaml">StatefulSet</a>: <br>
                             <code>kubectl apply -f postgresql_statefulset.yaml</code> <br>
                             <code>kubectl get pods</code> <br>
-                            <img src="../../img/k8s/pg-pending.png" alt="Pending PostgreSQL Pod">
-                            <img src="../../img/k8s/pg-running.png" alt="Running PostgreSQL Pod">
+                            <img src="../img/k8s/pg-pending.png" alt="Pending PostgreSQL Pod">
+                            <img src="../img/k8s/pg-running.png" alt="Running PostgreSQL Pod">
                         </li>
                     </ol>
 
@@ -125,7 +125,7 @@
                     </code>
                     <p><em>-it means "integrated terminal"</em></p>
                     <p><em>/bin/bash is the location of the command to run the shell of your choice, typically located in the bin folder.</em></p>
-                    <img src="../../img/k8s/exec.png" alt="Exec into Pod">
+                    <img src="../img/k8s/exec.png" alt="Exec into Pod">
 
                     <h2>Exercise</h2>
                     <p>We will not be making any databases directly in the pod, but here's a second exercise that will demonstrate how mounts work.</p>
@@ -136,7 +136,7 @@
 
                     <h2>Congrats! You deployed PostgreSQL on your K8s stack.</h2>
 
-                    <h3>Next - <a href="../L3/exercise.md">2.3 Deploy PgAdmin Yourself</a></h3>
+                    <h3>Next - <a href="./pgadmin-exercise.html">2.3 Deploy PgAdmin Yourself</a></h3>
                 </div>
             </div>
         </div>

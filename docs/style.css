@@ -10,6 +10,7 @@
   --dropdown-bg: #ffffff;       /* Dropdown background – pure white */
   --dropdown-border: #c8cbd2;   /* Dropdown border – slightly darker gray */
   --dropdown-hover-bg: #d6dae2; /* Dropdown hover – soft gray for contrast */
+  --dropdown-hover-bg-light: #e1e5ec; /* Dropdown hover – soft gray for contrast */
   
   --header-bg: #ffffff;         /* Header background – white */
   --header-2-bg: #f3f4f7;       /* Secondary header background – subtle gray */
@@ -32,7 +33,7 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
+  width: 100%;
   height: 56px;
   background: var(--header-bg);
   color: var(--accent-green);
@@ -50,9 +51,11 @@ body {
 .main-layout {
   display: flex;
   flex-direction: row;
-  width: 100vw;
+  width: 100%;
   margin-top: 56px;
   min-height: calc(100vh - 56px);
+  box-sizing: border-box;
+  overflow-x: hidden; /* prevent accidental horizontal scroll */
 }
 
 
@@ -115,7 +118,7 @@ body {
 }
 
 .dropdown-content a:hover {
-  background-color: var(--dropdown-hover-bg);
+  background-color: var(--dropdown-hover-bg-light);
   color: var(--accent-green);
   transition: all 0.15s ease-in-out;
 }
@@ -126,6 +129,7 @@ body {
   flex: 1;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .content-header {
@@ -151,6 +155,7 @@ body {
   margin: 0px 70px;
   font-size: 20px;
   line-height: 1.7em;
+  box-sizing: border-box;
 }
 .content a {
   color: var(--accent-green);
@@ -168,4 +173,56 @@ code {
   background-color: var(--sidebar-bg);
   padding: 2px;
   border-radius: 3px;
+}
+
+/* Responsive fixes: prevent long content from overflowing */
+.content img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 12px 0;
+}
+
+.content pre {
+  white-space: pre-wrap; /* allow long lines to wrap */
+  word-break: break-word;
+  overflow-x: auto; /* allow horizontal scroll when needed */
+  background-color: var(--sidebar-bg);
+  padding: 12px;
+  border-radius: 4px;
+}
+
+.content code {
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Make sure the overall layout doesn't exceed the viewport */
+html, body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Current-page dropdown styling */
+.dropdown-btn.current {
+  /* subtle highlight for the dropdown button itself */
+  font-weight: 600;
+  background-color: var(--sidebar-hover-bg);
+  color: var(--sidebar-hover-fg);
+  border-left: 4px solid var(--accent-green);
+}
+
+.dropdown-btn[aria-expanded="true"] {
+  background-color: var(--sidebar-hover-bg);
+}
+
+/* Highlight the exact matching link inside the dropdown */
+.dropdown-content a.current-link {
+  background-color: var(--dropdown-hover-bg-light);
+  color: var(--accent-green);
+  font-weight: 700;
+}
+
+.dropdown-btn {
+  transition: background-color 0.15s ease, border-left 0.15s ease;
 }
