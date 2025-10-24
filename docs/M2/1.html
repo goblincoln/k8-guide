@@ -40,7 +40,161 @@
             <div class="main-content">
                 <div class="content-header">2.1 Manifests</div>
                 <div class="content">
-                    <!-- Page content goes here -->
+                    <a href="../index.html">Return Home</a>
+
+                    <h1>2.1: Kubernetes Manifests/Resource Types Guide</h1>
+
+                    <p>
+                    This section will help you understand the basics of Kubernetes manifests and how they relate to deploying applications. If you’re new to Kubernetes, don’t worry. This document breaks down the most important concepts and resources you’ll encounter.
+                    </p>
+
+                    <p>
+                    A <strong>Kubernetes Resource</strong> is any object you define and manage in the cluster, like Pods, Services, or Ingresses, that tells Kubernetes what to run and how to run it.
+                    </p>
+
+                    <h2>What is a Manifest?</h2>
+
+                    <p>
+                    A <strong>Kubernetes manifest</strong> is a YAML file that describes the desired state of a resource in your cluster, such as a deployment, service, or volume. You apply manifests using <code>kubectl apply -f &lt;filename.yaml&gt;</code>, and Kubernetes takes care of creating or updating the resources.
+                    </p>
+
+                    <p>Other kubectl commands:</p>
+                    <ul>
+                        <li><code>kubectl help</code></li>
+                        <li><code>kubectl delete</code>, <code>kubectl delete -f &lt;filename.yaml&gt;</code></li>
+                        <li><code>kubectl logs</code></li>
+                        <li><code>kubectl describe &lt;resourceType&gt; &lt;resourceName&gt;</code></li>
+                    </ul>
+
+                    <h2>Why Use Manifests?</h2>
+                    <ul>
+                        <li><strong>Declarative:</strong> You describe what you want, Kubernetes figures out how to make it happen.</li>
+                        <li><strong>Versioned:</strong> Manifests can be stored in Git for easy tracking and collaboration.</li>
+                        <li><strong>Reusable:</strong> You can share and reuse manifests across environments.</li>
+                    </ul>
+
+                    <h2>Naming Conventions</h2>
+                    <p>
+                    For training purposes and to keep things organized, name your manifest files using the pattern:<br>
+                    <code>&lt;appname&gt;_&lt;resourcetype&gt;.yaml</code><br>
+                    Example: <code>postgresql_deployment.yaml</code>, <code>nifi_service.yaml</code>
+                    </p>
+
+                    <hr>
+
+                    <h2>Key Resource Types</h2>
+
+                    <h3>Deployment</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Run stateless applications (no persistent data needed between pod restarts).</li>
+                        <li><strong>Use Cases:</strong> Web servers, API backends, frontends.</li>
+                        <li><strong>Scaling:</strong> Easily scale up/down with replicas.</li>
+                        <li><strong>Persistence:</strong> Can use PVCs for shared data, but each pod is replaceable.</li>
+                    </ul>
+
+                    <h3>StatefulSet</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Run stateful applications (each pod keeps its own data).</li>
+                        <li><strong>Use Cases:</strong> Databases, clustered apps, anything needing stable storage.</li>
+                        <li><strong>Identity:</strong> Each pod gets a unique name and its own storage.</li>
+                        <li><strong>Persistence:</strong> Uses <code>volumeClaimTemplates</code> for per-pod storage.</li>
+                    </ul>
+
+                    <h3>Service</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Expose your pods to other pods or external clients.</li>
+                        <li><strong>Types:</strong>
+                            <ul>
+                                <li><strong>ClusterIP:</strong> Internal-only (default).</li>
+                                <li><strong>NodePort:</strong> Opens a port on each node for external access.</li>
+                                <li><strong>LoadBalancer:</strong> Integrates with cloud load balancers.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Best Practice:</strong> Use ClusterIP with Ingress for production HTTP/HTTPS traffic.</li>
+                    </ul>
+
+                    <h3>Ingress</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Route external HTTP/HTTPS traffic to services in your cluster.</li>
+                        <li><strong>Features:</strong>
+                            <ul>
+                                <li>Custom domains and paths.</li>
+                                <li>TLS termination (HTTPS).</li>
+                                <li>Centralized routing for multiple apps.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Example:</strong> Serve multiple apps at different paths or subdomains.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h3>Secret</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Store sensitive data (passwords, tokens, certificates).</li>
+                        <li><strong>Encoding:</strong> Values are base64-encoded, not encrypted by default.</li>
+                        <li><strong>Usage:</strong> Mount secrets as files or environment variables in your pods.</li>
+                    </ul>
+
+                    <p><strong>Example: Generic Secret</strong></p>
+                    <pre><code>kubectl create secret generic my-db-secret \
+        --from-literal=username=myuser \
+        --from-literal=password=mypassword</code></pre>
+
+                    <p><strong>Example: TLS Secret for Ingress</strong></p>
+                    <pre><code>kubectl create secret tls my-tls-secret \
+        --cert=path/to/tls.crt \
+        --key=path/to/tls.key</code></pre>
+
+                    <hr>
+
+                    <h3>ConfigMap</h3>
+                    <ul>
+                        <li><strong>Purpose:</strong> Store non-sensitive configuration data (env vars, config files).</li>
+                        <li><strong>Usage:</strong> Mount as files or inject as environment variables.</li>
+                        <li><strong>Note:</strong> Not encrypted; don’t store secrets here.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h3>PersistentVolume (PV), PersistentVolumeClaim (PVC), &amp; StorageClass</h3>
+                    <ul>
+                        <li><strong>PV:</strong> Represents a piece of storage in your cluster (local disk, NFS, cloud disk, etc.).</li>
+                        <li><strong>PVC:</strong> A request for storage by a pod; binds to a matching PV.</li>
+                        <li><strong>StorageClass:</strong> Defines types of storage (e.g., SSD, HDD, cloud provider) and controls how volumes are dynamically provisioned.</li>
+                        <li><strong>Dynamic Provisioning:</strong> With solutions like Longhorn or cloud providers, PVCs automatically get a PV based on the specified StorageClass—no need to create PVs manually.</li>
+                    </ul>
+                    <p>
+                    <em>Note:</em> Always specify a <code>storageClassName</code> in your PVC to select the desired storage backend and performance characteristics.
+                    </p>
+
+                    <hr>
+
+                    <h2>Practical Tips</h2>
+                    <ul>
+                        <li><strong>Don’t memorize YAML:</strong> Use documentation and examples.</li>
+                        <li><strong>Apply manifests:</strong> <code>kubectl apply -f &lt;filename.yaml&gt;</code></li>
+                        <li><strong>Check resource status:</strong> <code>kubectl get pods</code>, <code>kubectl describe &lt;resource&gt;</code></li>
+                        <li><strong>Logs:</strong> <code>kubectl logs &lt;pod-name&gt;</code></li>
+                        <li><strong>Port-forward for web UIs:</strong> <code>kubectl port-forward svc/&lt;service-name&gt; &lt;local-port&gt;:&lt;service-port&gt;</code></li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>Further Reading</h2>
+                    <ul>
+                        <li><a href="https://kubernetes.io/docs/home/" target="_blank">Kubernetes Official Docs</a></li>
+                        <li><a href="https://kubernetes.io/docs/concepts/" target="_blank">Kubernetes Concepts Overview</a></li>
+                    </ul>
+
+                    <hr>
+
+                    <p>
+                    This guide should help you get started with the most common Kubernetes resources and how to use them in your manifests. If you’re ever stuck, check the official docs or ask for help!
+                    </p>
+
+                    <hr>
+
+                    <h3>Next - <a href="./2.html">2.2 PostgreSQL Walkthrough</a></h3>
                 </div>
             </div>
         </div>

@@ -1,5 +1,7 @@
 # Kubernetes Training Guide
 
+[K8 Guide Website!](https://goblincoln.github.io/k8-guide/)
+
 This repository is a practical Kubernetes training resource. 
 It walks through deploying, managing, and troubleshooting real-world containerized applications using Kubernetes. Please follow each module in a linear manner unless you already have familiarity with Kubernetes.
 

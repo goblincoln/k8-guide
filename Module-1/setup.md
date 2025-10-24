@@ -1,7 +1,7 @@
 [Return Home](/README.md)
 
 
-# Module 1: Kubernetes Development Environment Setup (Windows)
+# Module 1: Kubernetes Development Environment Setup
 
 This guide will help you set up a Kubernetes development environment on your Windows machine using WSL and RKE2.
 

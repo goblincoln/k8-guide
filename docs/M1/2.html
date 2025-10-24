@@ -8,42 +8,185 @@
     <script src="../script.js"></script>
 </head>
 <body>
-
-        <div class="body-header">K8 Guide</div>
-        <div class="main-layout">
-            <div class="sidebar">
-                    <button class="btn"><a href="../index.html">Home</a></button>
-
-                    <button class="dropdown-btn">1. Introduction</button>
-                    <div class="dropdown-content">
-                    <a href="./1.html">1.1 About K8s</a>
-                    <a href="./2.html">1.2 Set Up Environment</a>
-                    </div>
-
-                    <button class="dropdown-btn">2. Deploying Apps</button>
-                    <div class="dropdown-content">
-                    <a href="../M2/1.html">2.1 Manifests</a>
-                    <a href="../M2/2.html">2.2 PostgreSQL Walkthrough</a>
-                    <a href="../M2/3.html">2.3 Exercise: Deploy PgAdmin</a>
-                    <a href="../M2/4a.html">2.4a Ingress</a>
-                    <a href="../M2/4b.html">2.4b Secrets</a>
-                    <a href="../M2/5.html">2.5 Exercise: Deploy More Apps</a>
-                    </div>
-
-                    <button class="dropdown-btn">3. Helm</button>
-                    <div class="dropdown-content">
-                    <a href="../M3/1.html">3.1 About Helm</a>
-                    <a href="../M3/2a.html">3.2a Create a Helm Chart</a>
-                    <a href="../M3/2b.html">3.2b Deploy a Stack With Helm</a>
-                    </div>
+    <div class="body-header">K8 Guide</div>
+    <div class="main-layout">
+        <div class="sidebar">
+            <button class="btn"><a href="../index.html">Home</a></button>
+            <button class="dropdown-btn">1. Introduction</button>
+            <div class="dropdown-content">
+                <a href="./1.html">1.1 About K8s</a>
+                <a href="./2.html">1.2 Set Up Environment</a>
             </div>
-            <div class="main-content">
-                <div class="content-header">1.2 Set Up Environment</div>
-                <div class="content">
-                    <!-- Page content goes here -->
-                </div>
+            <button class="dropdown-btn">2. Deploying Apps</button>
+            <div class="dropdown-content">
+                <a href="../M2/1.html">2.1 Manifests</a>
+                <a href="../M2/2.html">2.2 PostgreSQL Walkthrough</a>
+                <a href="../M2/3.html">2.3 Exercise: Deploy PgAdmin</a>
+                <a href="../M2/4a.html">2.4a Ingress</a>
+                <a href="../M2/4b.html">2.4b Secrets</a>
+                <a href="../M2/5.html">2.5 Exercise: Deploy More Apps</a>
+            </div>
+            <button class="dropdown-btn">3. Helm</button>
+            <div class="dropdown-content">
+                <a href="../M3/1.html">3.1 About Helm</a>
+                <a href="../M3/2a.html">3.2a Create a Helm Chart</a>
+                <a href="../M3/2b.html">3.2b Deploy a Stack With Helm</a>
             </div>
         </div>
-
+        <div class="main-content">
+            <div class="content-header">1.2 Set Up Environment</div>
+            <div class="content">
+                <a href="../index.html">&larr; Return Home</a>
+                <h1>Module 1: Kubernetes Development Environment Setup</h1>
+                <hr>
+                <p>
+                    This guide will help you set up a Kubernetes development environment on your Windows machine using WSL and RKE2.
+                </p>
+                <p>
+                    Please familiarize yourself with this process and these commands. If something doesn't make sense to you, don't just do it and move on. Seek answers, confirmation, and assistance to further your understanding about Kubernetes.
+                </p>
+                <p>
+                    Before you start, if you happen to run a command and you see "command not found," all it typically requires is a sudo apt install [package] and it usually provides that in the output, unless you misspelled.
+                </p>
+                <p>
+                    This guide will assume you already have a functional Linux environment available as setting it up can be found within the documentation that pertains to your specific environment.
+                </p>
+                <p>Options that are available:</p>
+                <ul>
+                    <li>WSL</li>
+                    <li>Virtualization (HyperV, VMWare, etc.)</li>
+                    <li>Bare Linux</li>
+                </ul>
+                <hr>
+                <h3>Before You Start</h3>
+                <p>
+                    If you are unfamiliar with linux or CLI commands, please do your due diligence and learn those. Please don't put random files where they shouldn't be, either. Usually I put mine in my user folder <code>/home/goblincoln/</code>. <strong>Please be careful when deleting or modifying files.</strong>
+                </p>
+                <h2>1. Install Kubernetes</h2>
+                <h3>Option 1: RKE2 (Rancher Kubernetes Engine - Government)</h3>
+                <p>
+                    RKE2 is a hardened version of Kubernetes, often used in government environments. My tutorial will focus on using this until I provide documentation for the others.
+                </p>
+                <ul>
+                    <li>Follow the <a href="https://docs.rke2.io/install/quickstart">RKE2 Quickstart Guide</a></li>
+                    <li>Read and execure the commands under <strong>"Server Node Installation"</strong></li>
+                </ul>
+                <h3>Option 2: Alternatives</h3>
+                <h2>2. Access Kubernetes Executables</h2>
+                <p>
+                    We’ll make <code>kubectl</code>, <code>crictl</code>, and <code>ctr</code> available system-wide or for your user.
+                </p>
+                <h3>Commands You’ll Use</h3>
+                <ul>
+                    <li><code>ls</code></li>
+                    <li><code>cp</code></li>
+                    <li><code>chown user:user</code> (The first user sets the owner, the second user sets the group. This example gives your user full control)</li>
+                    <li><code>chmod</code> (Look up documentation on this. It shouldn't be used freely. We probably want to give our files execute permissions for our user)</li>
+                    <li>Subcommands:
+                        <ul>
+                            <li><code>-R</code> (recursive)</li>
+                            <li><code>-a</code> (show all)</li>
+                        </ul>
+                    </li>
+                </ul>
+                <h3>Steps</h3>
+                <ol>
+                    <li>Locate the executables:
+                        <pre>/var/lib/rancher/rke2/bin</pre>
+                    </li>
+                    <li>Copy <code>kubectl</code>, <code>crictl</code>, and <code>ctr</code> to your desired <code>bin</code> directory:
+                        <ul>
+                            <li>For all users: <code>/usr/local/bin</code></li>
+                            <li>For your user: <code>~/bin</code> (create if it doesn't exist)</li>
+                        </ul>
+                    </li>
+                    <li>If you get a "permission denied" error:
+                        <ul>
+                            <li>Change ownership (if in your user’s bin):
+                                <pre><code>sudo chown youruser:youruser ~/bin/kubectl ~/bin/crictl ~/bin/ctr</code></pre>
+                            </li>
+                            <li>Or change permissions (if in <code>/usr/local/bin</code>):
+                                <pre><code>sudo chmod +x /usr/local/bin/kubectl /usr/local/bin/crictl /usr/local/bin/ctr</code></pre>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Test by running:
+                        <pre><code>kubectl version</code></pre>
+                        <img src="../img/k8s/kubectl.png" alt="Kubectl">
+                    </li>
+                </ol>
+                <hr>
+                <h2>3. Configure kubectl</h2>
+                <ol>
+                    <li>Locate your <code>rke2.yaml</code> config file:
+                        <pre>/etc/rancher/rke2/rke2.yaml</pre>
+                    </li>
+                    <li>Create a <code>.kube</code> directory in your home folder:
+                        <pre><code>mkdir -p ~/.kube</code></pre>
+                    </li>
+                    <li>Copy the config file:
+                        <pre><code>sudo cp /etc/rancher/rke2/rke2.yaml ~/.kube/config</code></pre>
+                    </li>
+                    <li>Change ownership:
+                        <pre><code>sudo chown youruser:youruser ~/.kube/config</code></pre>
+                    </li>
+                </ol>
+                <hr>
+                <h2>4. Update Your <code>.bashrc</code> for Convenience</h2>
+                <p>Add the following lines to your <code>~/.bashrc</code>:</p>
+                <pre><code>alias kubectl="kubectl --kubeconfig /home/YOURUSERNAME/.kube/config"
+alias ctr="ctr --address /run/k3s/containerd/containerd.sock"
+alias k=kubectl
+export KUBE_EDITOR=my_fav_editor
+</code></pre>
+                <ul>
+                    <li>If <code>~/bin</code> isn't automatically found, add <code>export PATH="$HOME/bin:$PATH"</code> to your <code>.bashrc</code> file as well.</li>
+                    <li>Replace <code>YOURUSERNAME</code> with your actual username.</li>
+                    <li>KUBE_EDITOR can be whatever you prefer. For example, if you wish to use <code>kubectl edit</code> on something, it will default to vim. This lets you choose nano if you're more comfortable with it.</li>
+                </ul>
+                <p><strong>Tip:</strong> Use <code>nano</code>, <code>vi</code>, or <code>vim</code> to edit <code>.bashrc</code>. Example:</p>
+                <pre><code>nano ~/.bashrc</code></pre>
+                <p>Apply changes:</p>
+                <pre><code>exec bash</code></pre>
+                <p>or close and reopen your terminal.</p>
+                <img src="../img/k8s/bashrc.png" alt="bashrc">
+                <hr>
+                <h2>5. Other installs</h2>
+                <ul>
+                    <li><strong>k9s</strong>: Terminal-based UI for Kubernetes.
+                        <ul>
+                            <li><a href="https://k9scli.io/topics/install/">k9s Installation</a>, <a href="https://github.com/derailed/k9s">GitHub</a></li>
+                            <li>Download and install per instructions on their page or go to the GitHub link for targeted installation instructions.</li>
+                        </ul>
+                    </li>
+                    <li><strong>helm</strong>: Kubernetes package manager.
+                        <ul>
+                            <li><a href="https://helm.sh/">Helm Docs</a></li>
+                            <li>Copy the commands line-by-line.</li>
+                        </ul>
+                        <pre><code>curl https://baltocdn.com/helm/signing.asc | gpg --dearmor | sudo tee /usr/share/keyrings/helm.gpg > /dev/null
+sudo apt-get install apt-transport-https --yes
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/helm.gpg] https://baltocdn.com/helm/stable/debian/ all main" | sudo tee /etc/apt/sources.list.d/helm-stable-debian.list
+sudo apt-get update
+sudo apt-get install helm 
+</code></pre>
+                    </li>
+                </ul>
+                <hr>
+                <p>You should end up with these results if everything is working:</p>
+                <img src="../img/k8s/cli-node.png" alt="K8s Working CLI">
+                <img src="../img/k8s/k9s-node.png" alt="K8s Working K9s">
+                <h3>Notes</h3>
+                <ul>
+                    <li>Practice using the command line for better muscle memory.</li>
+                    <li>Both <code>kubectl</code> and <code>k9s</code> are effective; use what works best for you. We might not always have k9s, but we will always have kubectl.</li>
+                </ul>
+                <hr>
+                <p>
+                    <strong>Next -</strong> <a href="../Module-2/L1/manifests.md">2.1 K8 Manifests</a>
+                </p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

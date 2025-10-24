@@ -1,18 +1,24 @@
-  :root {
-    --background: #202021;
-    --foreground: #d2d4e1;
-    --sidebar-bg: #131515;
-    --sidebar-border: #1d1d1d;
-    --sidebar-hover-bg: #2c2d36;
-    --sidebar-hover-fg: #ffffff;
-    --dropdown-bg: #202025;
-    --dropdown-border: #23272a;
-    --dropdown-hover-bg: #292a32;
-    --header-bg: #0f1010;
-    --header-2-bg: #131515;
-    --header-border: #47484d;
-    --accent-blue: #7aa4ff;
-  }
+:root {
+  --background: #ffffff;        /* Main background – pure white for max contrast */
+  --foreground: #1a1a1a;        /* Main text – darker for better readability */
+  
+  --sidebar-bg: #eceff3;        /* Sidebar background – slightly brighter gray */
+  --sidebar-border: #c2c4c9;    /* Sidebar border – slightly darker gray */
+  --sidebar-hover-bg: #d6dae2;  /* Sidebar hover – more contrast */
+  --sidebar-hover-fg: #0d0d0d;  /* Sidebar hover text – almost black */
+  
+  --dropdown-bg: #ffffff;       /* Dropdown background – pure white */
+  --dropdown-border: #c8cbd2;   /* Dropdown border – slightly darker gray */
+  --dropdown-hover-bg: #d6dae2; /* Dropdown hover – soft gray for contrast */
+  
+  --header-bg: #ffffff;         /* Header background – white */
+  --header-2-bg: #f3f4f7;       /* Secondary header background – subtle gray */
+  --header-border: #b4b7be;     /* Header border – darker gray for separation */
+  
+  --accent-green: #52b84f;      /* Main accent – stronger, more saturated green */
+  --accent-green-2: #7ed576;    /* Lighter accent – brighter for hover/secondary */
+}
+
 
 
 body {
@@ -29,7 +35,7 @@ body {
   width: 100vw;
   height: 56px;
   background: var(--header-bg);
-  color: var(--accent-blue);
+  color: var(--accent-green);
   font-size: 28px;
   font-weight: bold;
   display: flex;
@@ -81,7 +87,7 @@ body {
 .sidebar button:hover {
   background-color: var(--sidebar-hover-bg);
   color: var(--sidebar-hover-fg);
-  border-left: 4px solid var(--accent-blue);
+  border-left: 4px solid var(--accent-green);
   transition: all 0.15s ease-in-out;
 }
 
@@ -110,7 +116,7 @@ body {
 
 .dropdown-content a:hover {
   background-color: var(--dropdown-hover-bg);
-  color: var(--accent-blue);
+  color: var(--accent-green);
   transition: all 0.15s ease-in-out;
 }
 
@@ -147,11 +153,19 @@ body {
   line-height: 1.7em;
 }
 .content a {
-  color: var(--accent-blue);
-  text-decoration: none;
+  color: var(--accent-green);
+  text-decoration: underline;
+}
+.content a:hover{
+  color: var(--accent-green-2)
 }
 hr {
   width: 100%;
   border: none;
   border-top: 1px solid var(--header-border);
+}
+code {
+  background-color: var(--sidebar-bg);
+  padding: 2px;
+  border-radius: 3px;
 }

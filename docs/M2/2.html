@@ -17,7 +17,7 @@
                     <button class="dropdown-btn">1. Introduction</button>
                     <div class="dropdown-content">
                     <a href="../M1/1.html">1.1 About K8s</a>
-                    <a href="../M2/2.html">1.2 Set Up Environment</a>
+                    <a href="../M1/2.html">1.2 Set Up Environment</a>
                     </div>
 
                     <button class="dropdown-btn">2. Deploying Apps</button>
@@ -40,7 +40,103 @@
             <div class="main-content">
                 <div class="content-header">2.2 PostgreSQL Walkthrough</div>
                 <div class="content">
-                    <!-- Page content goes here -->
+                    <a href="/README.md">Return Home</a>
+
+                    <h1>2.2: PostgreSQL Walkthrough</h1>
+
+                    <p>This will be a step-by-step guide to deploying PostgreSQL on Kubernetes.</p>
+
+                    <h2>Overview</h2>
+                    <p>PostgreSQL has five resources that we will apply to our cluster.</p>
+                    <ol>
+                        <li>StatefulSet (because we are using a database)</li>
+                        <li>Service</li>
+                        <li>Secret</li>
+                        <li>PVC</li>
+                        <li>PV (for manual storage)</li>
+                    </ol>
+
+                    <h2>Exercise</h2>
+                    <p>Look through the <a href="https://github.com/goblincoln/k8-guide/tree/main/Module-2/L2/postgresql" target="_blank">PostgreSQL manifest</a> files. The StatefulSet is the bread and butter of deploying an application in Kubernetes, so start with that.</p>
+
+                    <h3>Things to Emphasize</h3>
+                    <ul>
+                        <li>The <strong>StatefulSet</strong> is how we run our database Pod(s) with stable storage and identity. Unlike a Deployment, a StatefulSet keeps track of each Pod’s name and volume.</li>
+                        <li>The <strong>Service</strong> for this StatefulSet is a <strong>headless Service</strong> (<code>clusterIP: None</code>). This means it doesn’t give you a single IP address. Instead, it creates DNS records for each Pod. Databases like PostgreSQL need stable network identities, so this is important.</li>
+                        <li>The <strong>Secret</strong> is where we keep our sensitive info. In this case, the username and password. Always base64 your secrets. For real clusters, you’d store this more securely.</li>
+                        <li>The <strong>PVC</strong> (PersistentVolumeClaim) asks for storage. The <strong>PV</strong> (PersistentVolume) provides the actual storage from your node. The PVC and PV must match on <code>storageClassName</code> (manual) and access mode.</li>
+                        <li>Notice how the Pod inside the StatefulSet uses <code>volumeMounts</code> to mount the storage at <code>/var/lib/postgresql/data</code>. That’s where PostgreSQL keeps its database files. This file path will be different depending on your app.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>Next Steps</h2>
+                    <p>You do not want to apply the StatefulSet first. It depends on other resources to properly deploy its pods.</p>
+
+                    <ol>
+                        <li>
+                            Apply the <a href="https://github.com/goblincoln/k8-guide/tree/main/Module-2/L2/postgresql/postgresql_secret.yaml" target="_blank">Secret</a> first and check if it exists: <br>
+                            <code>kubectl apply -f postgresql_secret.yaml</code> <br>
+                            <code>kubectl get secret</code>
+                        </li>
+                        <li>
+                            Apply the <a href="https://github.com/goblincoln/k8-guide/tree/main/Module-2/L2/postgresql/postgresql_pvc.yaml" target="_blank">pv/pvc</a> (both are in one file): <br>
+                            <code>kubectl apply -f postgresql_pvc.yaml</code><br>
+                            <code>kubectl get pv</code><br>
+                            <code>kubectl get pvc</code>
+                            <p>You need to ensure it says "Bound" and not "Pending." If it says "Pending" you need to navigate your PV and look where it says <code>hostpath</code>.</p>
+                            <p>Because we are manually provisioning our storage, and not using an application like Longhorn currently, we most likely need to manually create the directory assigned to <code>hostpath</code> depending on the permissions of your file system. If you plan on putting it in a protected directory like /mnt, you will have to use the <code>sudo</code> command.</p>
+                            <code>sudo mkdir /mnt/postgres-training
+                            </code>
+                            <p>It is possible that you will need to manipulate permissions on this directory to allow our application to make changes. If you created it in a protected directory such as /mnt, you require elevated permissions to even create the directory.</p>
+                            <p>For now, you can give open permissions to the directory /mnt/postgresql-training</p>
+                            <code>sudo chmod -R a+rwx /mnt/postgres-training
+                            </code>
+                            <p>But, you won't want to do this in a production environment. Rather, depending on the application, you want to give its user ownership of the directory.</p>
+                            <code>sudo chown -R postgres:postgres /mnt/postgres-training
+                            </code>
+                        </li>
+                        <li>
+                            Apply the <a href="https://github.com/goblincoln/k8-guide/tree/main/Module-2/L2/postgresql/postgresql_service.yaml" target="_blank">Service</a>: <br>
+                            <code>kubectl apply -f postgresql_service.yaml</code> <br>
+                            <code>kubectl get svc</code>
+                        </li>
+                        <li>
+                            Apply the <a href="https://github.com/goblincoln/k8-guide/tree/main/Module-2/L2/postgresql/postgresql_statefulset.yaml">StatefulSet</a>: <br>
+                            <code>kubectl apply -f postgresql_statefulset.yaml</code> <br>
+                            <code>kubectl get pods</code> <br>
+                            <img src="../../img/k8s/pg-pending.png" alt="Pending PostgreSQL Pod">
+                            <img src="../../img/k8s/pg-running.png" alt="Running PostgreSQL Pod">
+                        </li>
+                    </ol>
+
+                    <h2>After it's Running</h2>
+
+                    <h3>Monitoring</h3>
+                    <p>You can now perform various monitoring actions on your resource or pod.</p>
+                    <code>kubectl describe &lt;resource-type&gt; &lt;resource-name&gt;
+                    kubectl logs &lt;pod-name&gt;
+                    </code>
+
+                    <h3>Executing</h3>
+                    <p>If a Pod is running, you are allowed to use a shell provided by the image that the application is built on to <strong>exec</strong> into the Pod. For an application like PostgreSQL, you can do things like create a database directly inside your Pod. You can also browse the files and view the layout. Most Pods have a Unix-based file system.</p>
+                    <p>Example:</p>
+                    <code>kubectl exec -it &lt;pod-name&gt; -- /bin/bash
+                    </code>
+                    <p><em>-it means "integrated terminal"</em></p>
+                    <p><em>/bin/bash is the location of the command to run the shell of your choice, typically located in the bin folder.</em></p>
+                    <img src="../../img/k8s/exec.png" alt="Exec into Pod">
+
+                    <h2>Exercise</h2>
+                    <p>We will not be making any databases directly in the pod, but here's a second exercise that will demonstrate how mounts work.</p>
+                    <ol>
+                        <li>Remember where you made a mount <code>/mnt/postgres-training</code>? List the files in that directory and make note of what you see.</li>
+                        <li>Exec into your postgres pod. Once you're in, list the files in the <code>/var/lib/postgresql/data</code> directory. Remember we have that in the statefulset? That is the path within the PostgreSQL container that database information is stored. It should look the same as what you have in <code>mnt/postgres-training</code>.</li>
+                    </ol>
+
+                    <h2>Congrats! You deployed PostgreSQL on your K8s stack.</h2>
+
+                    <h3>Next - <a href="../L3/exercise.md">2.3 Deploy PgAdmin Yourself</a></h3>
                 </div>
             </div>
         </div>
