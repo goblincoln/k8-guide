@@ -84,6 +84,7 @@
                         <li><strong>Use Cases:</strong> Web servers, API backends, frontends.</li>
                         <li><strong>Scaling:</strong> Easily scale up/down with replicas.</li>
                         <li><strong>Persistence:</strong> Can use PVCs for shared data, but each pod is replaceable.</li>
+                        <li><a href="../../img/k8s/deployment.png" target="_blank">Basic Deployment</a></li>
                     </ul>
                     <hr>
                     <h3>StatefulSet</h3>
@@ -92,6 +93,7 @@
                         <li><strong>Use Cases:</strong> Databases, clustered apps, anything needing stable storage.</li>
                         <li><strong>Identity:</strong> Each pod gets a unique name and its own storage.</li>
                         <li><strong>Persistence:</strong> Uses <code>volumeClaimTemplates</code> for per-pod storage.</li>
+                        <li><a href="../../img/k8s/stateful.png" target="_blank">Basic StatefulSet</a></li>
                     </ul>
                     <hr>
                     <h3>Service</h3>

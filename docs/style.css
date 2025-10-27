@@ -43,7 +43,7 @@ body {
   align-items: center;
   justify-content: flex-start;
   padding-left: 32px;
-  /* border-bottom: 5px solid var(--header-border); */
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.15);
   z-index: 1002;
   letter-spacing: 1px;
 }

@@ -1,0 +1,67 @@
+###
+
+# This is a super basic Deployment resource type. Essentially the "skeleton" that "Deploys" pods onto your cluster. 
+
+###
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 1 # Specify number of replicas, default is 1.
+  selector:
+    matchLabels:
+      app: myapp # Selects pods with the label "app: myapp"
+  template:
+    metadata:
+      labels:
+        app: myapp # Labels applied to the pods created by this Deployment
+    spec:
+      containers:
+      - name: myapp # Name of the container
+        image: myapp-image:1.0.0 # Docker image to use
+        ports:
+        - containerPort: 80 # Port the container listens on (e.g., HTTP default 80)
+
+          
+--- # This is a file divider. It allows you to divide resources in a single .yaml file!
+
+###
+
+# This is a super basic StatefulSet resource type. It looks super similar to the Deployment, the use case is just different.
+
+###
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: myapp-statefulset
+  labels:
+    app: myapp
+spec:
+  serviceName: "myapp" # Allows stable pod DNS communication
+  replicas: 1 # Specify number of replicas, default is 1.
+  selector:
+    matchLabels:
+      app: myapp # Selects pods with the label "app: myapp"
+  template:
+    metadata:
+      labels:
+        app: myapp # Labels applied to the pods created by this StatefulSet
+    spec:
+      containers:
+      - name: myapp # Name of the container
+        image: myapp-image:1.0.0 # Docker image to use
+        ports:
+        - containerPort: 80 # Port the container listens on (e.g., HTTP default 80)
+
+---
+
+###
+
+# This is a basic service.
+
+###

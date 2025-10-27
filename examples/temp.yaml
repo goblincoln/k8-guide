@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp-deployment
+  labels:
+    app: myapp
+spec:
+  replicas: 1 # Specify number of replicas, default is 1.
+  selector:
+    matchLabels:
+      app: myapp # Selects pods with the label "app: myapp"
+  template:
+    metadata:
+      labels:
+        app: myapp # Labels applied to the pods created by this Deployment
+    spec:
+      containers:
+      - name: myapp # Name of the container
+        image: myapp-image:1.0.0 # Docker image to use
+        ports:
+        - containerPort: 80 # Port the container listens on (e.g., HTTP default 80)
+          env: # List of environment variables to inject into the container
+          - name: ENV_VARIABLE_NAME_HARD_CODED # Env var key (hard-coded)
+            value: "env_variable_value" # Literal value assigned to the env var
+          - name: ENV_VARIABLE_NAME_FROM_SECRET # Env var key populated from a Secret
+            valueFrom:
+              secretKeyRef:
+                name: SECRET_NAME # Kubernetes Secret name (must exist in same namespace)
+                key: KEY_FROM_SECRET # Specific key within the Secret to use as the value
+          
