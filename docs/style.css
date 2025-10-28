@@ -226,3 +226,67 @@ html, body {
 .dropdown-btn {
   transition: background-color 0.15s ease, border-left 0.15s ease;
 }
+
+/* Footer pagination (Back / Next) */
+.page-footer {
+  /* Stick to the bottom of the viewport, to the right of the fixed sidebar */
+  position: fixed;
+  left: 220px;
+  right: 0;
+  bottom: 0;
+  /* Use the same color as page background for a cleaner, subtle footer */
+  background: var(--background);
+  padding: 6px 12px; /* skinnier */
+  box-shadow: 0 -4px 10px rgba(0,0,0,0.04); /* more subtle */
+  z-index: 1002;
+  backdrop-filter: blur(0px);
+}
+.nav-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Make sure page content isn't hidden behind the sticky footer */
+.main-content {
+  padding-bottom: 64px; /* reduced space for the skinnier footer */
+}
+
+.nav-footer .btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 6px;
+  background: transparent;
+  color: var(--accent-green);
+  text-decoration: none;
+  border-radius: 0;
+  font-weight: 600;
+  box-shadow: none;
+  transition: color 0.12s ease;
+}
+.nav-footer .btn:hover {
+  text-decoration: underline;
+  color: var(--accent-green-2);
+}
+/* Small screens: stack buttons vertically */
+@media (max-width: 520px) {
+  .nav-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .nav-footer .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* On very small screens (where sidebar may overlay), allow the footer to span full width */
+@media (max-width: 520px) {
+  .page-footer {
+    left: 0;
+    right: 0;
+  }
+}

@@ -65,3 +65,172 @@ spec:
 # This is a basic service.
 
 ###
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-service
+  labels:
+    app: myapp
+spec:
+  selector:
+    app: myapp # Selects pods with the label "app: myapp"
+  ports:
+  - protocol: TCP
+    port: 80 # Port exposed by the service
+    targetPort: 8080 # Port on the pod to forward traffic to
+  type: ClusterIP # Service type: ClusterIP, NodePort, LoadBalancer
+
+---
+
+###
+
+# This is a basic Ingress resource. Note that these require an Ingress Controller to be running in your cluster and must be configured properly.
+
+###
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myapp-ingress
+  labels:
+    app: myapp
+spec:
+  rules:
+  - host: myapp.example.com # Replace with your domain
+    http:
+      paths:
+      - path: / # Path to match
+        pathType: Prefix
+        backend:
+          service:
+            name: myapp-service # Name of the service to route traffic to
+            port:
+              number: 8080 # Port of the service to route traffic to
+
+---
+
+###
+
+# This is a basic Secret resource. Note that the data is base64-encoded, not encrypted.
+
+###
+
+apiVersion: v1
+kind: Secret
+metadata:
+  name: myapp-secret
+type: Opaque
+data:
+  username: bXlhcHB1c2Vy # base64-encoded value of "myappuser"
+  password: bXlhcHBwYXNzd29yZA== # base64-encoded value of "myapppassword"
+
+### Instructions to create the username and password values:
+    # echo -n 'myappuser' | base64
+    # echo -n 'myapppassword' | base64
+
+---
+
+###
+
+# This is a basic ConfigMap resource. They are used to store non-sensitive configuration data.
+
+###
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: myapp-config
+data:
+  # Example: database connection within application through env variables.      
+  DB_NAME: mydatabase
+  DB_HOST: mydb.example.com
+  DB_PORT: "5432"
+  DB_USERNAME:
+    valueFrom:
+      secretKeyRef:
+        name: myapp-secret # select the username from the secret created above
+        key: username
+  DB_PASSWORD: 
+    valueFrom:
+      secretKeyRef:
+        name: myapp-secret # select the password from the secret created above
+        key: password
+        
+---
+
+###
+
+# This is a basic PersistentVolumeClaim resource. It is used to request storage resources from Storage Provisioners in your cluster.
+
+###
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: myapp-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce # Access mode: ReadWriteOnce, ReadOnlyMany, ReadWriteMany
+  storageClassName: myapp-storage-longhorn # Storage class to use (depends on your cluster setup)
+  resources:
+    requests:
+      storage: 1Gi # Amount of storage requested
+
+---
+
+###
+
+# This is a basic StorageClass resource. It defines how storage is provisioned in your cluster.
+
+###
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: myapp-storage-longhorn
+provisioner: driver.longhorn.io # Example provisioner, change based on your cluster setup
+parameters:
+  numberOfReplicas: "3" # Example parameter for Longhorn, change based on your provisioner
+reclaimPolicy: Retain # Reclaim policy: Retain, Delete, or Recycle
+volumeBindingMode: Immediate # or WaitForFirstConsumer
+
+---
+
+###
+
+# This is the basic Statefulset resource updated to use the PVC created above for persistent storage.
+
+###
+
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: myapp-statefulset
+  labels:
+    app: myapp
+spec:
+  serviceName: "myapp" # Allows stable pod DNS communication
+  replicas: 1 # Specify number of replicas, default is 1.
+  selector:
+    matchLabels:
+      app: myapp # Selects pods with the label "app: myapp"
+  template:
+    metadata:
+      labels:
+        app: myapp # Labels applied to the pods created by this StatefulSet
+    spec:
+      containers:
+      - name: myapp # Name of the container
+        image: myapp-image:1.0.0 # Docker image to use
+        ports:
+        - containerPort: 80 # Port the container listens on (e.g., HTTP default 80)
+        volumeMounts:
+        - name: myapp-storage
+          mountPath: /data # Path inside the container where the volume will be mounted
+      volumes:
+      - name: myapp-storage
+        persistentVolumeClaim:
+          claimName: myapp-pvc # Reference to the PVC created above
+
+---
+

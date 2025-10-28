@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2.1: Manifests</title>
+    <title>1.2: Manifests</title>
     <link rel="stylesheet" href="../style.css">
     <script src="../script.js"></script>
 </head>
@@ -16,18 +16,18 @@
 
                     <button class="dropdown-btn">1. Introduction</button>
                     <div class="dropdown-content">
-                    <a href="../M1/about-kubernetes.html">1.1 About K8s</a>
-                    <a href="../M1/environment-setup.html">1.2 Set Up Environment</a>
+                    <a href="./about-kubernetes.html">1.1 About K8s</a>
+                    <a href="./manifests-intro.html">1.2 Manifests</a>
+                    <a href="./environment-setup.html">1.3 Set Up Environment</a>
                     </div>
 
                     <button class="dropdown-btn">2. Deploying Apps</button>
                     <div class="dropdown-content">
-                    <a href="./manifests-intro.html">2.1 Manifests</a>
-                    <a href="./postgresql-walkthrough.html">2.2 PostgreSQL Walkthrough</a>
-                    <a href="./pgadmin-exercise.html">2.3 Exercise: Deploy PgAdmin</a>
-                    <a href="./ingress.html">2.4a Ingress</a>
-                    <a href="./secrets.html">2.4b Secrets</a>
-                    <a href="./deploy-more-apps.html">2.5 Exercise: Deploy More Apps</a>
+                    <a href="../M2/postgresql-walkthrough.html">2.2 PostgreSQL Walkthrough</a>
+                    <a href="../M2/pgadmin-exercise.html">2.3 Exercise: Deploy PgAdmin</a>
+                    <a href="../M2/ingress.html">2.4a Ingress</a>
+                    <a href="../M2/secrets.html">2.4b Secrets</a>
+                    <a href="../M2/deploy-more-apps.html">2.5 Exercise: Deploy More Apps</a>
                     </div>
 
                     <button class="dropdown-btn">3. Helm</button>
@@ -38,11 +38,10 @@
                     </div>
             </div>
             <div class="main-content">
-                <div class="content-header">2.1 Manifests</div>
+                <div class="content-header">1.2 Manifests</div>
                 <div class="content">
-                    <a href="../index.html">Return Home</a>
 
-                    <h1>2.1: Kubernetes Manifests/Resource Types Guide</h1>
+                    <h1>1.3: Kubernetes Manifests/Resource Types Guide</h1>
 
                     <p>
                     This section will help you understand the basics of Kubernetes manifests and how they relate to deploying applications. If you’re new to Kubernetes, don’t worry. This document breaks down the most important concepts and resources you’ll encounter.
@@ -104,6 +103,7 @@
                                 <li><strong>ClusterIP:</strong> Internal-only (default).</li>
                                 <li><strong>NodePort:</strong> Opens a port on each node for external access.</li>
                                 <li><strong>LoadBalancer:</strong> Integrates with cloud load balancers.</li>
+                                <li><a href="../../img/k8s/svc.png" target="_blank">Basic Service</a></li>
                             </ul>
                         </li>
                         <li><strong>Best Practice:</strong> Use ClusterIP with Ingress for production HTTP/HTTPS traffic.</li>
@@ -117,6 +117,7 @@
                                 <li>Custom domains and paths.</li>
                                 <li>TLS termination (HTTPS).</li>
                                 <li>Centralized routing for multiple apps.</li>
+                                <li><a href="../../img/k8s/ingress.png" target="_blank">Basic Ingress</a></li>
                             </ul>
                         </li>
                         <li><strong>Example:</strong> Serve multiple apps at different paths or subdomains.</li>
@@ -129,14 +130,15 @@
                         <li><strong>Purpose:</strong> Store sensitive data (passwords, tokens, certificates).</li>
                         <li><strong>Encoding:</strong> Values are base64-encoded, not encrypted by default.</li>
                         <li><strong>Usage:</strong> Mount secrets as files or environment variables in your pods.</li>
+                        <li><a href="../../img/k8s/secret.png" target="_blank">Basic Secret</a></li>
                     </ul>
 
-                    <p><strong>Example: Generic Secret</strong></p>
+                    <p><strong>Example: Kubectl Create Generic Secret From Direct Values</strong></p>
                     <pre><code>kubectl create secret generic my-db-secret \
         --from-literal=username=myuser \
         --from-literal=password=mypassword</code></pre>
 
-                    <p><strong>Example: TLS Secret for Ingress</strong></p>
+                    <p><strong>Example: TLS Secret for Ingress using signed Certs and keys</strong></p>
                     <pre><code>kubectl create secret tls my-tls-secret \
         --cert=path/to/tls.crt \
         --key=path/to/tls.key</code></pre>
@@ -148,6 +150,7 @@
                         <li><strong>Purpose:</strong> Store non-sensitive configuration data (env vars, config files).</li>
                         <li><strong>Usage:</strong> Mount as files or inject as environment variables.</li>
                         <li><strong>Note:</strong> Not encrypted; don’t store secrets here.</li>
+                        <li><a href="../../img/k8s/configmap.png" target="_blank">Basic Configmap</a></li>
                     </ul>
 
                     <hr>
@@ -160,8 +163,14 @@
                         <li><strong>Dynamic Provisioning:</strong> With solutions like Longhorn or cloud providers, PVCs automatically get a PV based on the specified StorageClass—no need to create PVs manually.</li>
                     </ul>
                     <p>
-                    <em>Note:</em> Always specify a <code>storageClassName</code> in your PVC to select the desired storage backend and performance characteristics.
+                    <strong>Important:</strong> In most cases, you only need to create PVCs in your manifests. The underlying PVs will be created automatically by the storage provisioner based on the StorageClass specified in the PVC. Additionally, it is important to know how volumes are mounted. When they are mounted, they are typically mounted to specific paths within the container's filesystem, allowing the application running inside the container to read from and write to the persistent storage as needed. In doing so, if you decide to choose a folder that already has data in it, that data may be deleted by the volume mount. Be sure to choose an empty folder or one that is intended for that purpose. Some applications have scripts that can initialize data in an empty folder upon startup.
+
                     </p>
+                    <ul>
+                        <li>Check out this <a href="../../img/k8s/pvc-storageclass.png" target="_blank">PVC with custom StorageClass</a> for Longhorn. The PVC requests storage from Longhorn with custom parameters set with the storageclass, like the "Retain" property. You can also use Longhorn's default StorageClass instead of creating your own.</li>
+                        <li>But wait, what do we do next? We have to edit the StatefulSet to set the PVC in our Volumes section. <a href="../../img/k8s/stateful-pvc.png" target="_blank">Check it out!</a></li>
+                        <li>When you apply your PVC, it will automatically create the PV with a UID that manages the storage for your pod.</li>
+                    </ul>
 
                     <hr>
 
@@ -189,8 +198,12 @@
                     </p>
 
                     <hr>
-
-                    <h3>Next - <a href="./postgresql-walkthrough.html">2.2 PostgreSQL Walkthrough</a></h3>
+                    <footer class="page-footer" role="contentinfo">
+                        <nav class="nav-footer" role="navigation" aria-label="Pagination">
+                            <a class="btn btn-back" href="./about-kubernetes.html" aria-label="Back to About Kubernetes">Back</a>
+                            <a class="btn btn-next" href="./environment-setup.html" aria-label="Next: Environment Setup">Next</a>
+                        </nav>
+                    </footer>
                 </div>
             </div>
         </div>
