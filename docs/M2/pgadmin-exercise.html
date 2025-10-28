@@ -45,6 +45,7 @@
                     <p><a href="https://github.com/goblincoln/k8-guide/tree/main/Module-2/L3/pgadmin">PgAdmin Skeleton Files</a></p>
                     <h3>1. Secret</h3>
                     <ol>
+                        <li>Open <a href="https://github.com/goblincoln/k8-guide/blob/main/Module-2/L3/pgadmin/pgadmin_secret.yaml" target="_blank">pgadmin-secret.yaml</a></li>
                         <li>Create a unique name for the secret and add it to the <code>metadata</code> section of the manifest.</li>
                         <li>In the <code>code</code> section, add your secret data. Format each entry as <code>key: value</code>. Rename <code>key</code> to something meaningful for the value it represents.</li>
                         <li>Remember that secrets must be base64 encoded. Use a Linux terminal or an online tool to encode your string, and replace <code>value</code> with the encoded string.</li>
@@ -52,6 +53,7 @@
                     </ol>
                     <h3>2. Deployment</h3>
                     <ol>
+                        <li>Open <a href="https://github.com/goblincoln/k8-guide/blob/main/Module-2/L3/pgadmin/pgadmin_deployment.yaml" target="_blank">pgadmin-deployment.yaml</a></li>
                         <li>fsGroup specifies the group ID (GID) that will own the files and directories within volumes mounted by the pod. Find what PgAdmin needs it's policy set to and add that.</li>
                         <li>Add an image for PgAdmin. You can find them on Dockerhub. Get a version that is more recent but not "latest" or "snapshot." It should look like <code>dpage/pgadmin:x.x.x</code> <em>(note: the official Docker image is created by dpage).</em></li>
                         <li>Add a name for the port assigned internally within the container. </li>
@@ -59,6 +61,7 @@
 
                     <h3>3. Service</h3>
                     <ol>
+                        <li>Open <a href="https://github.com/goblincoln/k8-guide/blob/main/Module-2/L3/pgadmin/pgadmin_service.yaml" target="_blank">pgadmin-service.yaml</a></li>
                         <li>Create a unique name for the service and add it to the <code>metadata</code> section of the manifest.</li>
                         <li>Create a name, a port number for the service. Recall what targetPort is by looking at the postgresql service. You can either use the port number itself or the name of the port that was created in 2c.</li>
                         <li>Apply the service to your cluster.</li>
