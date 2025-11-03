@@ -40,13 +40,13 @@ spec:
     - host: www.k8s.com
       http:
         paths:
-          - path: /k8(/|$)(.*)
+          - path: /pgadmin(/|$)(.*)
             pathType: Prefix
             backend:
               service:
                 name: pgadmin-service
                 port:
-                  number: 80
+                  number: 8080
 ```
 
 **Key fields:**

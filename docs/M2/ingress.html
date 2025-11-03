@@ -37,9 +37,45 @@
                     </div>
             </div>
             <div class="main-content">
-                <div class="content-header">2.4a Ingress</div>
+                <div class="content-header">2.3 Ingress</div>
                 <div class="content">
-                    <!-- Page content goes here -->
+                    <h1>2.3 Ingress</h1>
+
+                    <p>After deploying PgAdmin4 and Postgres, you can access PgAdmin using port forwarding or a NodePort. However, the preferred way to expose web apps in Kubernetes is with an <strong>Ingress</strong></p>
+
+                    <h3>What is an Ingress?</h3>
+                    <p>An <strong>Ingress</strong> is a Kubernetes resource that manages external access to services in your cluster, typically HTTP/HTTPS. It lets you:</p>
+                    <ul>
+                        <li>Route traffic based on hostnames or URL paths</li>
+                        <li>Use custom domains</li>
+                        <li>Terminate TLS (HTTPS)</li>
+                        <li>Centralize routing for multiple apps</li>
+                    </ul>
+
+                    <h3>Why use Ingress?</h3>
+                    <p>Instead of exposing apps on random ports and IPs, Ingress lets you define clear rules for routing traffic, improving security and manageability.</p>
+
+                    <h3>Hostnames and Ingress</h3>
+                    <p>A <strong>hostname</strong> is a human-friendly name (like `www.example.com`) that maps to an IP address. For testing, you can define hostnames locally on your machine. Ingress lets you access your apps using these hostnames, rather than raw IPs and ports.</p>
+
+                    <h2>Build an Ingress for PgAdmin</h2>
+                    <p>Here is a basic Ingress Manifest:</p>
+
+                    <img src="../../img/k8s/pgadmin-ingress.png" alt="Pgadmin Basic Ingress">
+                    
+                    <strong>Key fields:</strong>
+                    <ul>
+                        <li><code>metadata.name</code>: Unique name for the Ingress resource.</li>
+                        <li><code>spec.rules.host</code>: The hostname to route traffic for (e.g., `pgadmin.local`).</li>
+                        <li><code>spec.rules.http.paths.path</code>: The URL path to match (e.g., `/`).</li>
+                        <li><code>spec.rules.http.paths.backend.service.name</code>: The name of the service to route traffic to (e.g., `pgadmin-service`).</li>
+                        <li><code>spec.rules.http.paths.backend.service.port.number</code>: The port number of the service (e.g., `8080`).</li>
+
+
+
+
+
+
                     <hr>
                     <footer class="page-footer" role="contentinfo">
                         <nav class="nav-footer" role="navigation" aria-label="Pagination">

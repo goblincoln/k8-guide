@@ -67,6 +67,13 @@
                         <li>Apply the service to your cluster.</li>
                     </ol>
 
+                    <h3>4. Access PgAdmin UI</h3>
+                    <ol>
+                        <li>Use kubectl port-forward to forward the PgAdmin service port to your local machine. Example: <code>kubectl port-forward svc &lt;service-name&gt; 8080:&lt;service-port&gt;</code></li>
+                        <li>Open your web browser and navigate to <code>http://localhost:8080</code> (or the port you used in step 4a).</li>
+                        <li>Log in using the email and password you set in the secret.</li>
+                        <li>Add a new server connection in PgAdmin to connect to your PostgreSQL instance. Use the service name of your PostgreSQL service as the host.</li>
+
 
                     <hr>
                     <footer class="page-footer" role="contentinfo">
